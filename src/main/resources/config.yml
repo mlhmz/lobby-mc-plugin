@@ -1,0 +1,17 @@
+prefix: "&6mlhmz.xyz &8\u00BB&7"
+
+# Lobby Location
+lobbyworld:
+  x:
+  y:
+  z:
+  yaw:
+  pitch:
+
+# Bedwars Location
+bedwars_x:
+bedwars_y:
+bedwars_z:
+bedwars_yaw:
+bedwars_pitch:
+
