@@ -1,5 +1,6 @@
 package xyz.mlhmz.lobbyutilities.commands;
 
+import org.bukkit.Location;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -7,45 +8,54 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 public class BuildCommand implements CommandExecutor {
-    private LobbyUtilities plugin;
+    private final LobbyUtilities plugin;
 
     public BuildCommand(LobbyUtilities plugin) {
         this.plugin = plugin;
 
-        plugin.getCommand("build").setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("build")).setExecutor(this);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!(sender instanceof Player)) {
+        if(!(sender instanceof Player p)) {
             sender.sendMessage("Nur Spieler können diesen Befehl ausführen!");
             return true;
         }
-        Player p = (Player) sender;
-        if(p.hasPermission("lobby.build")) {
-            if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-                if(!LobbyUtilities.builderlist.contains(p.getUniqueId())) {
-                    p.setGameMode(GameMode.CREATIVE);
-                    p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
-                    LobbyUtilities.builderlist.add(p.getUniqueId());
-                    p.getInventory().clear();
-                } else {
 
-                    p.setGameMode(GameMode.SURVIVAL);
-                    p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
-                    LobbyUtilities.builderlist.remove(p.getUniqueId());
-                    p.getInventory().clear();
-                    p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
-                    ;
-                }
-            } else {
-                p.sendMessage(LobbyUtilities.prefix + "Du bist nicht in der Lobbywelt.");
-            }
-            return true;
-        } else {
+        Location lobbyLocation = plugin.getConfig().getLocation("spawn");
+
+        // Check if user is permitted and in the right world to build
+        if (!p.hasPermission("lobby.build")) {
             p.sendMessage(LobbyUtilities.prefix + "§cDu hast keine Rechte dazu!");
+            return true;
         }
-        return false;
+        if (lobbyLocation == null) {
+            p.sendMessage(LobbyUtilities.prefix + "§cDie Lobbywelt wurde noch nicht eingerichtet");
+            return true;
+        }
+        if (!(p.getWorld().equals(lobbyLocation.getWorld()))) {
+            p.sendMessage(LobbyUtilities.prefix + "Du bist nicht in der Lobbywelt.");
+            return true;
+        }
+
+        if(LobbyUtilities.builderlist.contains(p.getUniqueId())) {
+            p.setGameMode(GameMode.SURVIVAL);
+            p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
+            LobbyUtilities.builderlist.remove(p.getUniqueId());
+            p.getInventory().clear();
+            p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
+
+        } else {
+            p.setGameMode(GameMode.CREATIVE);
+            p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
+            LobbyUtilities.builderlist.add(p.getUniqueId());
+            p.getInventory().clear();
+        }
+        return true;
     }
 }
