@@ -1,13 +1,13 @@
-package me.mlhmz.serverutils;
+package xyz.mlhmz.serverutils;
 
-import me.mlhmz.serverutils.Commands.Creative;
-import me.mlhmz.serverutils.Commands.Spawn;
-import me.mlhmz.serverutils.Commands.Spawnutils;
-import me.mlhmz.serverutils.Utils.ChatUtils;
-import me.mlhmz.serverutils.Utils.Items;
-import me.mlhmz.serverutils.listeners.LobbyEvents;
-import me.mlhmz.serverutils.listeners.Chat;
-import me.mlhmz.serverutils.listeners.NavigatorListener;
+import xyz.mlhmz.serverutils.Commands.Creative;
+import xyz.mlhmz.serverutils.Commands.Spawn;
+import xyz.mlhmz.serverutils.Commands.Spawnutils;
+import xyz.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.serverutils.Utils.Items;
+import xyz.mlhmz.serverutils.listeners.LobbyEvents;
+import xyz.mlhmz.serverutils.listeners.Chat;
+import xyz.mlhmz.serverutils.listeners.NavigatorListener;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

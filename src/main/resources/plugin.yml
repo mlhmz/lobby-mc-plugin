@@ -1,8 +1,8 @@
 name: Serverutils
 version: ${project.version}
-main: me.mlhmz.serverutils.Serverutils
-api-version: 1.16
-authors: [Paym]
+main: xyz.mlhmz.serverutils.Serverutils
+api-version: 1.19
+authors: [mlhmz]
 description: Serverutils
 
 commands:

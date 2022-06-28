@@ -1,4 +1,4 @@
-package me.mlhmz.serverutils.objects;
+package xyz.mlhmz.serverutils.objects;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

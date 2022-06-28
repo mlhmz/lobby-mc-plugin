@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+group 'xyz.mlhmz'
+version '2.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://repo.minebench.de/"
+    }
+    maven {
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+    }
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+
+configurations {
+    shadow
+    compile.extendsFrom provided
+    provided.extendsFrom shadow
+}
+
+dependencies {
+    shadow 'de.themoep:inventorygui:1.5-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+}
+
+//shadowJar {
+//    archivesBaseName = "serverutils"
+//
+//    dependencies {
+//        include(dependency('de.themoep:inventorygui.*'))
+//    }
+//}
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+task fatJar(type: ShadowJar) {
+    configurations = [project.configurations.shadow]
+    from(project.sourceSets.main.output)
+}

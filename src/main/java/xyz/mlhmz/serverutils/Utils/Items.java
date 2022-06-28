@@ -1,4 +1,4 @@
-package me.mlhmz.serverutils.Utils;
+package xyz.mlhmz.serverutils.Utils;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

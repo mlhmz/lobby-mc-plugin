@@ -1,9 +1,9 @@
-package me.mlhmz.serverutils.Commands;
+package xyz.mlhmz.serverutils.Commands;
 
-import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.ChatUtils;
-import me.mlhmz.serverutils.Utils.Navigator;
-import me.mlhmz.serverutils.objects.NavEntry;
+import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.serverutils.Utils.Navigator;
+import xyz.mlhmz.serverutils.objects.NavEntry;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,9 +1,9 @@
-package me.mlhmz.serverutils.Inventorys;
+package xyz.mlhmz.serverutils.Inventorys;
 
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
-import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.serverutils.Utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

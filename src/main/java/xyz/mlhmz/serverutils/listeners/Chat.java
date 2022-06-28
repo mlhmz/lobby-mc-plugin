@@ -1,6 +1,6 @@
-package me.mlhmz.serverutils.listeners;
+package xyz.mlhmz.serverutils.listeners;
 
-import me.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.serverutils.Serverutils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

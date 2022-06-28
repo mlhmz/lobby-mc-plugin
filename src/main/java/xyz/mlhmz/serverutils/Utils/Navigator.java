@@ -1,9 +1,7 @@
-package me.mlhmz.serverutils.Utils;
+package xyz.mlhmz.serverutils.Utils;
 
-import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.objects.NavEntry;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
+import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.serverutils.objects.NavEntry;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

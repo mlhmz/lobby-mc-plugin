@@ -1,12 +1,12 @@
-package me.mlhmz.serverutils.listeners;
+package xyz.mlhmz.serverutils.listeners;
 
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
-import me.mlhmz.serverutils.Inventorys.ServerInv;
-import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.BukkitSerialization;
-import me.mlhmz.serverutils.Utils.ChatUtils;
-import me.mlhmz.serverutils.objects.NavEntry;
+import xyz.mlhmz.serverutils.Inventorys.ServerInv;
+import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.serverutils.Utils.BukkitSerialization;
+import xyz.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.serverutils.objects.NavEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

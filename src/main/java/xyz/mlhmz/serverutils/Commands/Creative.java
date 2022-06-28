@@ -1,7 +1,6 @@
-package me.mlhmz.serverutils.Commands;
+package xyz.mlhmz.serverutils.Commands;
 
-import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.Items;
+import xyz.mlhmz.serverutils.Serverutils;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

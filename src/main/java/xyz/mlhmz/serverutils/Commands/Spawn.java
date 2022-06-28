@@ -1,7 +1,7 @@
-package me.mlhmz.serverutils.Commands;
+package xyz.mlhmz.serverutils.Commands;
 
-import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.serverutils.Utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
