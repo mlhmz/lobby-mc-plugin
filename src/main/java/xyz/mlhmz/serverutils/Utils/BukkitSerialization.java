@@ -14,16 +14,17 @@ import java.io.IOException;
 
 /**
  * Serialization for Bukkit
+ *
+ * @author graywolf336
+ * @see <a href="https://gist.github.com/graywolf336/8153678">Gist</a>
  */
 public class BukkitSerialization {
-    // Code by graywolf336
-    // Found on https://gist.github.com/graywolf336/8153678
     /**
      * Converts the player inventory to a String array of Base64 strings. First string is the content and second string is the armor.
      *
      * @param playerInventory to turn into an array of strings.
      * @return Array of strings: [ main content, armor content ]
-     * @throws IllegalStateException
+     * @throws IllegalStateException thrown when the item stacks were unable to save
      */
     public static String[] playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException {
         //get the main content part, this doesn't return the armor
@@ -43,7 +44,7 @@ public class BukkitSerialization {
      *
      * @param items to turn into a Base64 String.
      * @return Base64 string of the items.
-     * @throws IllegalStateException
+     * @throws IllegalStateException thrown when the item stacks were unable to save
      */
     public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
         try {
@@ -54,8 +55,8 @@ public class BukkitSerialization {
             dataOutput.writeInt(items.length);
 
             // Save every element in the list
-            for (int i = 0; i < items.length; i++) {
-                dataOutput.writeObject(items[i]);
+            for (ItemStack item : items) {
+                dataOutput.writeObject(item);
             }
 
             // Serialize that array
@@ -78,7 +79,7 @@ public class BukkitSerialization {
      *
      * @param inventory to serialize
      * @return Base64 string of the provided inventory
-     * @throws IllegalStateException
+     * @throws IllegalStateException thrown when item stack are unable to save
      */
     public static String toBase64(Inventory inventory) throws IllegalStateException {
         try {
@@ -114,7 +115,7 @@ public class BukkitSerialization {
      *
      * @param data Base64 string of data containing an inventory.
      * @return Inventory created from the Base64 string.
-     * @throws IOException
+     * @throws IOException thrown when class type were unable to decode
      */
     public static Inventory fromBase64(String data) throws IOException {
         try {
@@ -143,7 +144,7 @@ public class BukkitSerialization {
      *
      * @param data Base64 string to convert to ItemStack array.
      * @return ItemStack array created from the Base64 string.
-     * @throws IOException
+     * @throws IOException thrown when class type were unable to decode
      */
     public static ItemStack[] itemStackArrayFromBase64(String data) throws IOException {
         try {
