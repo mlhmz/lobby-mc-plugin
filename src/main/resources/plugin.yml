@@ -9,6 +9,8 @@ commands:
   build:
     description: Schalter für den Build-Modus
     aliases: [b]
-  lobby:
-    description: Teleportiert den Spieler zu der Lobby zurück
-    aliases: [hub, l]
+  spawnutils:
+    description: Utilitys fuer die Spawn und Teleportfunktionen
+  spawn:
+    description: Teleportiert dich zum festgelegten Spawn
+    aliases: [s]

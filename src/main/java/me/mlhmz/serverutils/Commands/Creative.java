@@ -1,8 +1,7 @@
 package me.mlhmz.serverutils.Commands;
 
 import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.items;
-import org.bukkit.Bukkit;
+import me.mlhmz.serverutils.Utils.Items;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,18 +25,20 @@ public class Creative implements CommandExecutor {
         }
         Player p = (Player) sender;
         if(p.hasPermission("lobby.build")) {
-            if (p.getWorld() == Bukkit.getWorld(plugin.getConfig().getString("lobbyworld"))) {
+            if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
                 if(!Serverutils.builderlist.contains(p.getUniqueId())) {
                     p.setGameMode(GameMode.CREATIVE);
                     p.sendMessage(Serverutils.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
                     Serverutils.builderlist.add(p.getUniqueId());
                     p.getInventory().clear();
                 } else {
+
                     p.setGameMode(GameMode.SURVIVAL);
                     p.sendMessage(Serverutils.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
                     Serverutils.builderlist.remove(p.getUniqueId());
                     p.getInventory().clear();
-                    items.givefeather(p, 0);
+                    p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
+                    ;
                 }
             } else {
                 p.sendMessage(Serverutils.prefix + "Du bist nicht in der Lobbywelt.");

@@ -1,17 +1,22 @@
-prefix: "&6mlhmz.xyz &8\u00BB&7"
+prefix: '&6Lobby &8\u00BB&7'
 
-# Lobby Location
-lobbyworld:
-  x:
-  y:
-  z:
-  yaw:
-  pitch:
+navigatoritem:
+  name: '&6Navigator &7[&6Rechtsklick&7]'
+  # Minecraft Material Names (Will be upcased by plugin!)
+  material: 'FEATHER'
 
-# Bedwars Location
-bedwars_x:
-bedwars_y:
-bedwars_z:
-bedwars_yaw:
-bedwars_pitch:
+# Spawn Location
+spawn:
+
+# Navigator locations
+savedLocations:
+
+locations:
+
+servers:
+  - change
+  - servers
+  - in
+  - config
+
 

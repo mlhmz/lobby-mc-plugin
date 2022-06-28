@@ -33,7 +33,8 @@ public class Chat implements Listener {
                 String Message = e.getMessage();
                 e.setMessage(Message.replace(p.getName(), "§e@" + p.getName() + "§7" ));
                 p.playSound(p.getEyeLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 5, 1);
-                p.sendTitle("§ePaym §7hat dich erwähnt!", "§8Guck doch mal in den Chat.");
+                // One second has 20 ticks so everything is multiplied by 20
+                p.sendTitle("§ePaym §7hat dich erwähnt!", "§8Guck doch mal in den Chat.", 20 * 1, 20 * 3, 20 * 1);
             }
         }
     }

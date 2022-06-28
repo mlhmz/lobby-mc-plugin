@@ -1,28 +1,19 @@
 package me.mlhmz.serverutils.listeners;
 
 import me.mlhmz.serverutils.Serverutils;
-import me.mlhmz.serverutils.Utils.items;
+import me.mlhmz.serverutils.Utils.Items;
 import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 import static org.bukkit.Sound.*;
 
@@ -38,7 +29,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             if (!Serverutils.builderlist.contains(p.getUniqueId())) {
                 p.sendMessage(Serverutils.prefix + "Du kannst keine Blöcke abbauen!");
                 e.setCancelled(true);
@@ -51,7 +42,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             p.sendMessage(Serverutils.prefix + "Du kannst keine Items droppen!");
             e.setCancelled(true);
         }
@@ -60,7 +51,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void BedEnterEvent(PlayerBedEnterEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.setCancelled(true);
         }
     }
@@ -71,13 +62,15 @@ public class LobbyEvents implements Listener {
         e.setJoinMessage("§a§l» §7" + e.getPlayer().getName());
         p.setHealth(20);
         p.setSaturation(20);
-        Location l = new Location(Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld")), (double) plugin.getConfig().get("x"), (double) plugin.getConfig().get("y"), (double) plugin.getConfig().get("z"), (float) plugin.getConfig().getDouble("yaw"), (float) plugin.getConfig().getDouble("pitch"));
+        Location l = plugin.getConfig().getLocation("spawn");
         p.teleport(l);
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
         }
         p.getInventory().clear();
-        items.givefeather(p, 0);
+        Items items = new Items();
+
+        p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
 
     }
 
@@ -90,7 +83,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void SwapHandEvent(PlayerSwapHandItemsEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.setCancelled(true);
         }
     }
@@ -98,7 +91,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void EntityDamage(EntityDamageEvent e) {
         Entity et = e.getEntity();
-        if (et.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.setCancelled(Serverutils.cancelledMobDamage);
         }
     }
@@ -106,7 +99,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void EntityByEntityDamage(EntityDamageByEntityEvent e) {
         Entity et = e.getEntity();
-        if (et.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.setCancelled(Serverutils.cancelledMobDamage);
         }
     }
@@ -114,7 +107,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void EntityByBlockDamage(EntityDamageByBlockEvent e) {
         Entity et = e.getEntity();
-        if (et.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.setCancelled(Serverutils.cancelledMobDamage);
         }
     }
@@ -122,7 +115,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void HungerEvent(FoodLevelChangeEvent e) {
         Player p = (Player) e.getEntity();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.setCancelled(true);
         }
     }
@@ -130,11 +123,17 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent e) {
         Player p = e.getPlayer();
+
+        if (Serverutils.builderlist.contains(p.getUniqueId())) {
+            Serverutils.builderlist.remove(p.getUniqueId());
+        }
+
         p.stopSound(MUSIC_DISC_STAL);
         p.getInventory().clear();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+
             p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
-            items.givefeather(p, 0);
+            p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
         }
         p.setAllowFlight(false);
 
@@ -143,106 +142,8 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void DeathDrop(PlayerDeathEvent e) {
         Player p = e.getEntity().getPlayer();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             e.getDrops().clear();
-        }
-    }
-
-    @EventHandler
-    public void useItemEvent(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
-            if (!Serverutils.builderlist.contains(p.getUniqueId())) {
-                Inventory gui = Bukkit.createInventory(null, 9, "§2Navigation");
-
-                // PLACEHOLDER
-                ItemStack stained_glass = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-                ItemMeta stained_glass_meta = stained_glass.getItemMeta();
-                stained_glass_meta.setDisplayName("§7/");
-                stained_glass.setItemMeta(stained_glass_meta);
-
-                // SPAWN ITEM
-                ItemStack nether_star = new ItemStack(Material.NETHER_STAR);
-                ItemMeta nether_star_meta = nether_star.getItemMeta();
-                nether_star_meta.setDisplayName("§2Spawn");
-                nether_star.setItemMeta(nether_star_meta);
-
-                // BEDWARS ITEM
-                ItemStack red_bed = new ItemStack(Material.RED_BED);
-                ItemMeta red_bed_meta = red_bed.getItemMeta();
-                red_bed_meta.setDisplayName("§cBedWars");
-                red_bed_meta.addEnchant(Enchantment.DIG_SPEED, 3, false);
-                red_bed.setItemMeta(red_bed_meta);
-
-                // CHALLENGE ITEM
-                ItemStack water_bucket = new ItemStack(Material.WATER_BUCKET);
-                ItemMeta water_bucket_meta = water_bucket.getItemMeta();
-                water_bucket_meta.setDisplayName("§dChallenge");
-                water_bucket.setItemMeta(water_bucket_meta);
-
-
-                gui.setItem(0, red_bed);
-                gui.setItem(1, water_bucket);
-                gui.setItem(2, stained_glass);
-                gui.setItem(3, stained_glass);
-                gui.setItem(4, stained_glass);
-                gui.setItem(5, stained_glass);
-                gui.setItem(6, stained_glass);
-                gui.setItem(7, stained_glass);
-                gui.setItem(8, nether_star);
-
-                if (p.getItemInHand().getType() == Material.FEATHER) {
-                    p.openInventory(gui);
-                }
-                e.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler
-    public void clickEvent(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
-
-        if (p.getWorld() == Bukkit.getWorld((String) plugin.getConfig().get("lobbyworld"))) {
-            if (!Serverutils.builderlist.contains(p.getUniqueId())) {
-                e.setCancelled(true);
-            }
-
-            if (e.getView().getTitle().equalsIgnoreCase("§2Navigation")) {
-                if (e.getCurrentItem().getType().equals(Material.GRAY_STAINED_GLASS_PANE)) {
-                    e.setCancelled(true);
-                    return;
-                } else if (e.getCurrentItem().getType().equals(Material.NETHER_STAR)) {
-                    String world = (String) plugin.getConfig().get("lobbyworld");
-                    double x = plugin.getConfig().getDouble("x");
-                    double y = plugin.getConfig().getDouble("y");
-                    double z = plugin.getConfig().getDouble("z");
-                    float yaw = (float) plugin.getConfig().getDouble("yaw");
-                    float pitch = (float) plugin.getConfig().getDouble("pitch");
-                    Location l = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
-                    p.teleport(l);
-                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-                } else if (e.getCurrentItem().getType().equals(Material.RED_BED)) {
-                    String world = (String) plugin.getConfig().get("lobbyworld");
-                    double x = plugin.getConfig().getDouble("bedwars_x");
-                    double y = plugin.getConfig().getDouble("bedwars_y");
-                    double z = plugin.getConfig().getDouble("bedwars_z");
-                    float yaw = (float) plugin.getConfig().getDouble("bedwars_yaw");
-                    float pitch = (float) plugin.getConfig().getDouble("bedwars_pitch");
-                    Location l = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
-                    p.teleport(l);
-                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-                } else if (e.getCurrentItem().getType().equals(Material.WATER_BUCKET)) {
-                    try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        DataOutputStream dos = new DataOutputStream(baos)) {
-                        dos.writeUTF("Connect");
-                        dos.writeUTF("challenge");
-                        p.sendPluginMessage(plugin, "BungeeCord", baos.toByteArray());
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                }
-            }
         }
     }
 
@@ -302,7 +203,7 @@ public class LobbyEvents implements Listener {
 
                     Score placeholder4 = obj.getScore("");
                     placeholder4.setScore(1);
-                    if (p.getWorld() == Bukkit.getWorld(plugin.getConfig().getString("lobbyworld"))) {
+                    if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
                         p.setScoreboard(board);
                     }
 
@@ -314,7 +215,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void DoubleJumpEvent (PlayerToggleFlightEvent e) {
         Player p = e.getPlayer();
-        if(p.getWorld() == Bukkit.getWorld(plugin.getConfig().getString("lobbyworld"))) {
+        if(p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             if (p.getGameMode() != GameMode.CREATIVE) {
                 e.setCancelled(true);
                 p.setAllowFlight(false);
@@ -328,7 +229,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void DoubleJumpMoveEvent (PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        if(p.getWorld() == Bukkit.getWorld(plugin.getConfig().getString("lobbyworld"))) {
+        if(p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             if (p.getGameMode() != GameMode.CREATIVE && p.isOnGround()) {
                 p.setAllowFlight(true);
             }
@@ -338,7 +239,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void ArmorStand (PlayerArmorStandManipulateEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld(plugin.getConfig().getString("lobbyworld"))) {
+        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
             if (Serverutils.builderlist.contains(p.getUniqueId())) {
                 return;
             }
@@ -350,7 +251,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void weatherChange(WeatherChangeEvent e) {
         World w = e.getWorld();
-        if (w.equals(Bukkit.getWorld(plugin.getConfig().getString("spawn.world")))) {
+        if (w.equals(plugin.getConfig().getLocation("spawn").getWorld())) {
             e.setCancelled(true);
             if (w.hasStorm()) {
                 w.setWeatherDuration(0);

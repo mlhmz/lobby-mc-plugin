@@ -6,7 +6,7 @@
 
     <groupId>me.mlhmz</groupId>
     <artifactId>Serverutils</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <packaging>jar</packaging>
 
     <name>Serverutils</name>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.3-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -88,7 +88,7 @@
             <artifactId>inventorygui</artifactId>
             <!--The following version may not be the latest. Check it before using.-->
             <version>1.4.2-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
