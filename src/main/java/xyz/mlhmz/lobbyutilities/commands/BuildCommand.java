@@ -1,16 +1,16 @@
-package xyz.mlhmz.serverutils.Commands;
+package xyz.mlhmz.lobbyutilities.commands;
 
-import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Creative implements CommandExecutor {
-    private Serverutils plugin;
+public class BuildCommand implements CommandExecutor {
+    private LobbyUtilities plugin;
 
-    public Creative(Serverutils plugin) {
+    public BuildCommand(LobbyUtilities plugin) {
         this.plugin = plugin;
 
         plugin.getCommand("build").setExecutor(this);
@@ -25,26 +25,26 @@ public class Creative implements CommandExecutor {
         Player p = (Player) sender;
         if(p.hasPermission("lobby.build")) {
             if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-                if(!Serverutils.builderlist.contains(p.getUniqueId())) {
+                if(!LobbyUtilities.builderlist.contains(p.getUniqueId())) {
                     p.setGameMode(GameMode.CREATIVE);
-                    p.sendMessage(Serverutils.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
-                    Serverutils.builderlist.add(p.getUniqueId());
+                    p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
+                    LobbyUtilities.builderlist.add(p.getUniqueId());
                     p.getInventory().clear();
                 } else {
 
                     p.setGameMode(GameMode.SURVIVAL);
-                    p.sendMessage(Serverutils.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
-                    Serverutils.builderlist.remove(p.getUniqueId());
+                    p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
+                    LobbyUtilities.builderlist.remove(p.getUniqueId());
                     p.getInventory().clear();
-                    p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
+                    p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
                     ;
                 }
             } else {
-                p.sendMessage(Serverutils.prefix + "Du bist nicht in der Lobbywelt.");
+                p.sendMessage(LobbyUtilities.prefix + "Du bist nicht in der Lobbywelt.");
             }
             return true;
         } else {
-            p.sendMessage(Serverutils.prefix + "§cDu hast keine Rechte dazu!");
+            p.sendMessage(LobbyUtilities.prefix + "§cDu hast keine Rechte dazu!");
         }
         return false;
     }

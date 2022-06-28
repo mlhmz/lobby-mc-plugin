@@ -1,7 +1,7 @@
-package xyz.mlhmz.serverutils.listeners;
+package xyz.mlhmz.lobbyutilities.listeners;
 
-import xyz.mlhmz.serverutils.Serverutils;
-import xyz.mlhmz.serverutils.Utils.Items;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.utils.Items;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,9 +18,9 @@ import org.bukkit.scoreboard.*;
 import static org.bukkit.Sound.*;
 
 public class LobbyEvents implements Listener {
-    private Serverutils plugin;
+    private LobbyUtilities plugin;
 
-    public LobbyEvents(Serverutils plugin) {
+    public LobbyEvents(LobbyUtilities plugin) {
         this.plugin = plugin;
 
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
@@ -30,8 +30,8 @@ public class LobbyEvents implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            if (!Serverutils.builderlist.contains(p.getUniqueId())) {
-                p.sendMessage(Serverutils.prefix + "Du kannst keine Blöcke abbauen!");
+            if (!LobbyUtilities.builderlist.contains(p.getUniqueId())) {
+                p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Blöcke abbauen!");
                 e.setCancelled(true);
                 return;
             }
@@ -43,7 +43,7 @@ public class LobbyEvents implements Listener {
     public void onItemDrop(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            p.sendMessage(Serverutils.prefix + "Du kannst keine Items droppen!");
+            p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Items droppen!");
             e.setCancelled(true);
         }
     }
@@ -70,7 +70,7 @@ public class LobbyEvents implements Listener {
         p.getInventory().clear();
         Items items = new Items();
 
-        p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
+        p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
 
     }
 
@@ -92,7 +92,7 @@ public class LobbyEvents implements Listener {
     public void EntityDamage(EntityDamageEvent e) {
         Entity et = e.getEntity();
         if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            e.setCancelled(Serverutils.cancelledMobDamage);
+            e.setCancelled(LobbyUtilities.cancelledMobDamage);
         }
     }
 
@@ -100,7 +100,7 @@ public class LobbyEvents implements Listener {
     public void EntityByEntityDamage(EntityDamageByEntityEvent e) {
         Entity et = e.getEntity();
         if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            e.setCancelled(Serverutils.cancelledMobDamage);
+            e.setCancelled(LobbyUtilities.cancelledMobDamage);
         }
     }
 
@@ -108,7 +108,7 @@ public class LobbyEvents implements Listener {
     public void EntityByBlockDamage(EntityDamageByBlockEvent e) {
         Entity et = e.getEntity();
         if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            e.setCancelled(Serverutils.cancelledMobDamage);
+            e.setCancelled(LobbyUtilities.cancelledMobDamage);
         }
     }
 
@@ -124,8 +124,8 @@ public class LobbyEvents implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent e) {
         Player p = e.getPlayer();
 
-        if (Serverutils.builderlist.contains(p.getUniqueId())) {
-            Serverutils.builderlist.remove(p.getUniqueId());
+        if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
+            LobbyUtilities.builderlist.remove(p.getUniqueId());
         }
 
         p.stopSound(MUSIC_DISC_STAL);
@@ -133,7 +133,7 @@ public class LobbyEvents implements Listener {
         if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
 
             p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
-            p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
+            p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
         }
         p.setAllowFlight(false);
 
@@ -150,7 +150,7 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void ItemEvent(InventoryDragEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (Serverutils.builderlist.contains(p.getUniqueId())) {
+        if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
             return;
         }
         e.setCancelled(true);
@@ -182,7 +182,7 @@ public class LobbyEvents implements Listener {
 
                 if (p.hasPermission("lobby.admin")) {
                     Score buildmode;
-                    if (Serverutils.builderlist.contains(p.getUniqueId())) {
+                    if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
                         buildmode = obj.getScore("§7Build-Modus: §aan");
                     } else {
                         buildmode = obj.getScore("§7Build-Modus: §caus");
@@ -193,7 +193,7 @@ public class LobbyEvents implements Listener {
                     placeholder3.setScore(3);
 
                     Score mobdmg;
-                    if (Serverutils.cancelledMobDamage) {
+                    if (LobbyUtilities.cancelledMobDamage) {
                         mobdmg = obj.getScore("§7Mobdamage: §caus");
                     } else {
                         mobdmg = obj.getScore("§7Mobdamage: §aan");
@@ -240,7 +240,7 @@ public class LobbyEvents implements Listener {
     public void ArmorStand (PlayerArmorStandManipulateEvent e) {
         Player p = e.getPlayer();
         if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            if (Serverutils.builderlist.contains(p.getUniqueId())) {
+            if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
                 return;
             }
             p.sendMessage("§8Nö");

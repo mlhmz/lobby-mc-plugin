@@ -1,12 +1,12 @@
-package xyz.mlhmz.serverutils.listeners;
+package xyz.mlhmz.lobbyutilities.listeners;
 
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
-import xyz.mlhmz.serverutils.Inventorys.ServerInv;
-import xyz.mlhmz.serverutils.Serverutils;
-import xyz.mlhmz.serverutils.Utils.BukkitSerialization;
-import xyz.mlhmz.serverutils.Utils.ChatUtils;
-import xyz.mlhmz.serverutils.objects.NavEntry;
+import xyz.mlhmz.lobbyutilities.inventories.ServerInventory;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.utils.BukkitSerialization;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.objects.NavigationEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class NavigatorListener implements Listener {
-    private Serverutils plugin;
+    private LobbyUtilities plugin;
 
-    public NavigatorListener(Serverutils plugin) {
+    public NavigatorListener(LobbyUtilities plugin) {
         this.plugin = plugin;
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -33,7 +33,7 @@ public class NavigatorListener implements Listener {
     public void interact(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            if (!Serverutils.builderlist.contains(p.getUniqueId())) {
+            if (!LobbyUtilities.builderlist.contains(p.getUniqueId())) {
                 if (p.getInventory().getItemInMainHand().getType() == Material.FEATHER) {
                     String[] rows = {
                         "abcdefghi",
@@ -81,8 +81,8 @@ public class NavigatorListener implements Listener {
                             serverItem,
                             1,
                             click -> {
-                                ServerInv serverInv = new ServerInv(plugin, p);
-                                serverInv.get().show(p);
+                                ServerInventory serverInventory = new ServerInventory(plugin, p);
+                                serverInventory.get().show(p);
                                 return true;
                             }
                     );
@@ -100,8 +100,8 @@ public class NavigatorListener implements Listener {
                         String locationConfigurationSection = "locations." + savedLocs.get(i);
 
                         // Name
-                        NavEntry navEntry = new NavEntry();
-                        navEntry.setName(plugin.getConfig().getString(locationConfigurationSection + ".name"));
+                        NavigationEntry navigationEntry = new NavigationEntry();
+                        navigationEntry.setName(plugin.getConfig().getString(locationConfigurationSection + ".name"));
 
                         // ItemStack
                         ItemStack item = null;

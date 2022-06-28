@@ -1,13 +1,13 @@
-package xyz.mlhmz.serverutils;
+package xyz.mlhmz.lobbyutilities;
 
-import xyz.mlhmz.serverutils.Commands.Creative;
-import xyz.mlhmz.serverutils.Commands.Spawn;
-import xyz.mlhmz.serverutils.Commands.Spawnutils;
-import xyz.mlhmz.serverutils.Utils.ChatUtils;
-import xyz.mlhmz.serverutils.Utils.Items;
-import xyz.mlhmz.serverutils.listeners.LobbyEvents;
-import xyz.mlhmz.serverutils.listeners.Chat;
-import xyz.mlhmz.serverutils.listeners.NavigatorListener;
+import xyz.mlhmz.lobbyutilities.commands.BuildCommand;
+import xyz.mlhmz.lobbyutilities.commands.SpawnCommand;
+import xyz.mlhmz.lobbyutilities.commands.SpawnUtilsCommand;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.utils.Items;
+import xyz.mlhmz.lobbyutilities.listeners.LobbyEvents;
+import xyz.mlhmz.lobbyutilities.listeners.Chat;
+import xyz.mlhmz.lobbyutilities.listeners.NavigatorListener;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public final class Serverutils extends JavaPlugin {
+public final class LobbyUtilities extends JavaPlugin {
 
     public static String prefix = ChatUtils.translate("§2Lobby §8§l» §7");
     public static ArrayList<UUID> builderlist = new ArrayList<UUID>();
@@ -35,10 +35,10 @@ public final class Serverutils extends JavaPlugin {
         }
 
         new Chat(this);
-        new Creative(this);
+        new BuildCommand(this);
         new LobbyEvents(this);
-        new Spawnutils(this);
-        new Spawn(this);
+        new SpawnUtilsCommand(this);
+        new SpawnCommand(this);
         new NavigatorListener(this);
 
         // Navigator Item

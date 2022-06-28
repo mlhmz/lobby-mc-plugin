@@ -1,4 +1,4 @@
-package xyz.mlhmz.serverutils.Utils;
+package xyz.mlhmz.lobbyutilities.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;

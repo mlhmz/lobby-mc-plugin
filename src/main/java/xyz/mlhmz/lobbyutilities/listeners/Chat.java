@@ -1,6 +1,6 @@
-package xyz.mlhmz.serverutils.listeners;
+package xyz.mlhmz.lobbyutilities.listeners;
 
-import xyz.mlhmz.serverutils.Serverutils;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -10,9 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Chat implements Listener {
-    private Serverutils plugin;
+    private LobbyUtilities plugin;
 
-    public Chat (Serverutils plugin) {
+    public Chat (LobbyUtilities plugin) {
         this.plugin = plugin;
 
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);

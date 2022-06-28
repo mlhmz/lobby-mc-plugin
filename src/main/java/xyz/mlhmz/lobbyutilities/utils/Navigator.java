@@ -1,17 +1,17 @@
-package xyz.mlhmz.serverutils.Utils;
+package xyz.mlhmz.lobbyutilities.utils;
 
-import xyz.mlhmz.serverutils.Serverutils;
-import xyz.mlhmz.serverutils.objects.NavEntry;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.objects.NavigationEntry;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class Navigator {
-    private Serverutils plugin;
+    private LobbyUtilities plugin;
 
-    public Navigator(Serverutils plugin) { this.plugin = plugin; }
+    public Navigator(LobbyUtilities plugin) { this.plugin = plugin; }
 
-    public boolean create(NavEntry entry) {
+    public boolean create(NavigationEntry entry) {
         // Name in List
         List<String> locList = plugin.getConfig().getStringList("savedLocations");
         if (locList.contains(entry.getName())) {

@@ -1,9 +1,9 @@
-package xyz.mlhmz.serverutils.Inventorys;
+package xyz.mlhmz.lobbyutilities.inventories;
 
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
-import xyz.mlhmz.serverutils.Serverutils;
-import xyz.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,11 +13,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class ServerInv {
-    private Serverutils plugin;
+public class ServerInventory {
+    private LobbyUtilities plugin;
     private Player player;
 
-    public ServerInv(Serverutils plugin, Player player) {
+    public ServerInventory(LobbyUtilities plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }

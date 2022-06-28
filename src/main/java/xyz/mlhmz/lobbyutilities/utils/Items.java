@@ -1,6 +1,5 @@
-package xyz.mlhmz.serverutils.Utils;
+package xyz.mlhmz.lobbyutilities.utils;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class Items {

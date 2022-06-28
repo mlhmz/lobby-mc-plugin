@@ -1,10 +1,7 @@
-package xyz.mlhmz.serverutils.Utils;
+package xyz.mlhmz.lobbyutilities.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Scoreboard {
     public static void show(Plugin plugin) {

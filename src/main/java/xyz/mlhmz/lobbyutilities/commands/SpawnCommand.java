@@ -1,17 +1,17 @@
-package xyz.mlhmz.serverutils.Commands;
+package xyz.mlhmz.lobbyutilities.commands;
 
-import xyz.mlhmz.serverutils.Serverutils;
-import xyz.mlhmz.serverutils.Utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Spawn implements CommandExecutor {
-    private Serverutils plugin;
+public class SpawnCommand implements CommandExecutor {
+    private LobbyUtilities plugin;
 
-    public Spawn(Serverutils plugin) {
+    public SpawnCommand(LobbyUtilities plugin) {
         this.plugin = plugin;
 
         plugin.getCommand("spawn").setExecutor(this);
@@ -27,14 +27,14 @@ public class Spawn implements CommandExecutor {
         Player p = (Player) sender;
 
         if (plugin.getConfig().getLocation("spawn") == null) {
-            p.sendMessage(Serverutils.prefix + ChatUtils.translate("&cEs wurde kein Spawn gesetzt!"));
+            p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("&cEs wurde kein Spawn gesetzt!"));
         }
 
 
         Location spawn = plugin.getConfig().getLocation("spawn");
         p.teleport(spawn);
         p.getInventory().clear();
-        p.getInventory().setItem(0, Serverutils.items.getNavigatorItem());
+        p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
 
         return true;
     }

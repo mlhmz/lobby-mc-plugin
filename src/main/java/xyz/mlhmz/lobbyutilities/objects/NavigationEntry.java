@@ -1,30 +1,29 @@
-package xyz.mlhmz.serverutils.objects;
+package xyz.mlhmz.lobbyutilities.objects;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class NavEntry {
+public class NavigationEntry {
     private String name;
     private ItemStack item;
     private Location location;
 
-    public NavEntry(String name, ItemStack item, Location location) {
+    public NavigationEntry(String name, ItemStack item, Location location) {
         this.name = name;
         this.item = item;
         this.location = location;
     }
 
-    public NavEntry(String name, Location location) {
+    public NavigationEntry(String name, Location location) {
         this.name = name;
         this.location = location;
     }
 
-    public NavEntry(String name) {
+    public NavigationEntry(String name) {
         this.name = name;
     }
 
-    public NavEntry() { }
+    public NavigationEntry() { }
 
     public String getName() {
         return name;

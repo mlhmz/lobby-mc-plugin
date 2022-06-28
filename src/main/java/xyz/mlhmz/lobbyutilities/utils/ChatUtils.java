@@ -1,4 +1,4 @@
-package xyz.mlhmz.serverutils.Utils;
+package xyz.mlhmz.lobbyutilities.utils;
 
 import net.md_5.bungee.api.ChatColor;
 
