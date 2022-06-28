@@ -43,17 +43,17 @@ public class BuildCommand implements CommandExecutor {
             return true;
         }
 
-        if(LobbyUtilities.builderlist.contains(p.getUniqueId())) {
+        if(LobbyUtilities.builderList.contains(p.getUniqueId())) {
             p.setGameMode(GameMode.SURVIVAL);
             p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
-            LobbyUtilities.builderlist.remove(p.getUniqueId());
+            LobbyUtilities.builderList.remove(p.getUniqueId());
             p.getInventory().clear();
             p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
 
         } else {
             p.setGameMode(GameMode.CREATIVE);
             p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
-            LobbyUtilities.builderlist.add(p.getUniqueId());
+            LobbyUtilities.builderList.add(p.getUniqueId());
             p.getInventory().clear();
         }
         return true;

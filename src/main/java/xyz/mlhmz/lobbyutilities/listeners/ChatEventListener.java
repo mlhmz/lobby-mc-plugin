@@ -9,10 +9,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class Chat implements Listener {
-    private LobbyUtilities plugin;
+public class ChatEventListener implements Listener {
+    private final LobbyUtilities plugin;
 
-    public Chat (LobbyUtilities plugin) {
+    public ChatEventListener(LobbyUtilities plugin) {
         this.plugin = plugin;
 
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
@@ -34,7 +34,7 @@ public class Chat implements Listener {
                 e.setMessage(Message.replace(p.getName(), "§e@" + p.getName() + "§7" ));
                 p.playSound(p.getEyeLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 5, 1);
                 // One second has 20 ticks so everything is multiplied by 20
-                p.sendTitle("§ePaym §7hat dich erwähnt!", "§8Guck doch mal in den Chat.", 20 * 1, 20 * 3, 20 * 1);
+                p.sendTitle("§ePaym §7hat dich erwähnt!", "§8Guck doch mal in den Chat.", 20, 20 * 3, 20);
             }
         }
     }

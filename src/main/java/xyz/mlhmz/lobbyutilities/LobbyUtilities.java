@@ -5,8 +5,8 @@ import xyz.mlhmz.lobbyutilities.commands.SpawnCommand;
 import xyz.mlhmz.lobbyutilities.commands.SpawnUtilsCommand;
 import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 import xyz.mlhmz.lobbyutilities.utils.Items;
-import xyz.mlhmz.lobbyutilities.listeners.LobbyEvents;
-import xyz.mlhmz.lobbyutilities.listeners.Chat;
+import xyz.mlhmz.lobbyutilities.listeners.LobbyEventListener;
+import xyz.mlhmz.lobbyutilities.listeners.ChatEventListener;
 import xyz.mlhmz.lobbyutilities.listeners.NavigatorListener;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,7 @@ import java.util.logging.Level;
 public final class LobbyUtilities extends JavaPlugin {
 
     public static String prefix = ChatUtils.translate("§2Lobby §8§l» §7");
-    public static ArrayList<UUID> builderlist = new ArrayList<>();
+    public static ArrayList<UUID> builderList = new ArrayList<>();
     public static boolean cancelledMobDamage = true;
     public static Items items = new Items();
 
@@ -79,9 +79,9 @@ public final class LobbyUtilities extends JavaPlugin {
     }
 
     private void registerCommandsAndListeners() {
-        new Chat(this);
+        new ChatEventListener(this);
         new BuildCommand(this);
-        new LobbyEvents(this);
+        new LobbyEventListener(this);
         new SpawnUtilsCommand(this);
         new SpawnCommand(this);
         new NavigatorListener(this);

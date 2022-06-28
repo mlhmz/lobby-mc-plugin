@@ -20,10 +20,10 @@ import static org.bukkit.Sound.*;
 /**
  * Events related to the lobby logic
  */
-public class LobbyEvents implements Listener {
+public class LobbyEventListener implements Listener {
     private final LobbyUtilities plugin;
 
-    public LobbyEvents(LobbyUtilities plugin) {
+    public LobbyEventListener(LobbyUtilities plugin) {
         this.plugin = plugin;
 
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
