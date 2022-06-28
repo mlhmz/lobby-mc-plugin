@@ -1,7 +1,7 @@
 package xyz.mlhmz.lobbyutilities.listeners;
 
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.utils.Items;
+import xyz.mlhmz.lobbyutilities.utils.InfoScoreboardUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -12,13 +12,16 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.*;
+
+import java.util.Objects;
 
 import static org.bukkit.Sound.*;
 
+/**
+ * Events related to the lobby logic
+ */
 public class LobbyEvents implements Listener {
-    private LobbyUtilities plugin;
+    private final LobbyUtilities plugin;
 
     public LobbyEvents(LobbyUtilities plugin) {
         this.plugin = plugin;
@@ -29,29 +32,40 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            if (!LobbyUtilities.builderlist.contains(p.getUniqueId())) {
-                p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Blöcke abbauen!");
-                e.setCancelled(true);
-                return;
-            }
+        if (!isPlayerAtSpawn(p)) return;
+
+        if (LobbyUtilities.builderList.contains(p.getUniqueId())) {
+            disableBlockBreak(e, p);
         }
 
+    }
+
+    private void disableBlockBreak(BlockBreakEvent e, Player p) {
+        p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Blöcke abbauen!");
+        e.setCancelled(true);
     }
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableItemDropOnSpawn(e, p);
+    }
+
+    private void disableItemDropOnSpawn(PlayerDropItemEvent e, Player p) {
+        if (isPlayerAtSpawn(p)) {
             p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Items droppen!");
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void BedEnterEvent(PlayerBedEnterEvent e) {
+    public void onBedEnter(PlayerBedEnterEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableBedEnterOnSpawn(e, p);
+    }
+
+    private void disableBedEnterOnSpawn(PlayerBedEnterEvent e, Player p) {
+        if (isPlayerAtSpawn(p)) {
             e.setCancelled(true);
         }
     }
@@ -59,63 +73,105 @@ public class LobbyEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+
+        initializePlayer(e, p);
+        teleportPlayerToSpawn(p);
+        setItemsOfPlayer(p);
+        createScoreboard(p);
+    }
+
+    private void setItemsOfPlayer(Player p) {
+        if (isPlayerAtSpawn(p)) {
+            p.getInventory().clear();
+            p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
+        }
+    }
+
+    private void teleportPlayerToSpawn(Player p) {
+        Location l = plugin.getConfig().getLocation("spawn");
+
+        if (l == null) {
+            return;
+        }
+
+        p.teleport(l);
+
+        if (isEntityAtSpawn(p)) {
+            playBackgroundMusic(p);
+        }
+    }
+
+    private void initializePlayer(PlayerJoinEvent e, Player p) {
         e.setJoinMessage("§a§l» §7" + e.getPlayer().getName());
         p.setHealth(20);
         p.setSaturation(20);
-        Location l = plugin.getConfig().getLocation("spawn");
-        p.teleport(l);
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
-        }
-        p.getInventory().clear();
-        Items items = new Items();
+    }
 
-        p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
-
+    private void createScoreboard(Player p) {
+        InfoScoreboardUtils.showScoreboardAndSchedule(plugin, p);
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         e.setQuitMessage("§c§l« §7" + e.getPlayer().getName());
-
     }
 
     @EventHandler
-    public void SwapHandEvent(PlayerSwapHandItemsEvent e) {
+    public void onHandSwap(PlayerSwapHandItemsEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableHandSwapOnSpawn(e, p);
+    }
+
+    private void disableHandSwapOnSpawn(PlayerSwapHandItemsEvent e, Player p) {
+        if (isPlayerAtSpawn(p)) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void EntityDamage(EntityDamageEvent e) {
+    public void onEntityDamage(EntityDamageEvent e) {
         Entity et = e.getEntity();
-        if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableEntityDamageOnSpawn(e, et);
+    }
+
+    private void disableEntityDamageOnSpawn(EntityDamageEvent e, Entity et) {
+        if (isEntityAtSpawn(et)) {
             e.setCancelled(LobbyUtilities.cancelledMobDamage);
         }
     }
 
     @EventHandler
-    public void EntityByEntityDamage(EntityDamageByEntityEvent e) {
+    public void onEntityByEntityDamage(EntityDamageByEntityEvent e) {
         Entity et = e.getEntity();
-        if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableEntityByEntityDamageOnSpawn(e, et);
+    }
+
+    private void disableEntityByEntityDamageOnSpawn(EntityDamageByEntityEvent e, Entity et) {
+        if (isEntityAtSpawn(et)) {
             e.setCancelled(LobbyUtilities.cancelledMobDamage);
         }
     }
 
     @EventHandler
-    public void EntityByBlockDamage(EntityDamageByBlockEvent e) {
+    public void onEntityByBlockDamage(EntityDamageByBlockEvent e) {
         Entity et = e.getEntity();
-        if (et.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableEntityByBlockDamageOnSpawn(e, et);
+    }
+
+    private void disableEntityByBlockDamageOnSpawn(EntityDamageByBlockEvent e, Entity et) {
+        if (isEntityAtSpawn(et)) {
             e.setCancelled(LobbyUtilities.cancelledMobDamage);
         }
     }
 
     @EventHandler
-    public void HungerEvent(FoodLevelChangeEvent e) {
+    public void onFoodLevelChange(FoodLevelChangeEvent e) {
         Player p = (Player) e.getEntity();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableFoodLevelChangeOnSpawn(e, p);
+    }
+
+    private void disableFoodLevelChangeOnSpawn(FoodLevelChangeEvent e, Player p) {
+        if (isPlayerAtSpawn(p)) {
             e.setCancelled(true);
         }
     }
@@ -124,98 +180,73 @@ public class LobbyEvents implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent e) {
         Player p = e.getPlayer();
 
-        if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
-            LobbyUtilities.builderlist.remove(p.getUniqueId());
-        }
+        // Removes the
+        LobbyUtilities.builderList.remove(p.getUniqueId());
 
-        p.stopSound(MUSIC_DISC_STAL);
-        p.getInventory().clear();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-
-            p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
-            p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
+        onWorldSwap(p);
+        if (isPlayerAtSpawn(p)) {
+            playBackgroundMusic(p);
         }
+        setItemsOfPlayer(p);
+
         p.setAllowFlight(false);
 
     }
 
+    private void playBackgroundMusic(Player p) {
+        p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
+    }
+
+    private void onWorldSwap(Player p) {
+        p.stopAllSounds();
+        p.getInventory().clear();
+    }
+
     @EventHandler
-    public void DeathDrop(PlayerDeathEvent e) {
+    public void onDeathDrop(PlayerDeathEvent e) {
         Player p = e.getEntity().getPlayer();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        disableInventoryDropIfPlayerAtSpawn(e, p);
+    }
+
+    private void disableInventoryDropIfPlayerAtSpawn(PlayerDeathEvent e, Player p) {
+        if (isPlayerAtSpawn(p)) {
             e.getDrops().clear();
         }
     }
 
     @EventHandler
-    public void ItemEvent(InventoryDragEvent e) {
+    public void onItemDrag(InventoryDragEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
-            return;
+        disableInventoryDragWhenNoBuilderMode(e, p);
+    }
+
+    /**
+     * checks if the player is in builder mode and if not, cancels the inventory drag
+     * @param e the drag event
+     * @param p the player to check
+     */
+    private void disableInventoryDragWhenNoBuilderMode(InventoryDragEvent e, Player p) {
+        if (!LobbyUtilities.builderList.contains(p.getUniqueId())) {
+            e.setCancelled(true);
         }
-        e.setCancelled(true);
     }
 
-    @EventHandler
-    public void ScoreboardEvent(PlayerJoinEvent e) {
-
-
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                Player p = e.getPlayer();
-                ScoreboardManager mang = Bukkit.getScoreboardManager();
-                Scoreboard board = mang.getNewScoreboard();
-
-                Objective obj = board.registerNewObjective("lobby", "dummy", "§2mlhmz Server Netzwerk");
-                obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-                Score placeholder1 = obj.getScore("");
-                placeholder1.setScore(7);
-
-                Score playercount = obj.getScore("§7Online: §a" + Bukkit.getOnlinePlayers().size() + "/§7" + Bukkit.getMaxPlayers());
-                playercount.setScore(6);
-
-                Score placeholder2 = obj.getScore("");
-                placeholder2.setScore(5);
-
-                if (p.hasPermission("lobby.admin")) {
-                    Score buildmode;
-                    if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
-                        buildmode = obj.getScore("§7Build-Modus: §aan");
-                    } else {
-                        buildmode = obj.getScore("§7Build-Modus: §caus");
-                    }
-                    buildmode.setScore(4);
-
-                    Score placeholder3 = obj.getScore("");
-                    placeholder3.setScore(3);
-
-                    Score mobdmg;
-                    if (LobbyUtilities.cancelledMobDamage) {
-                        mobdmg = obj.getScore("§7Mobdamage: §caus");
-                    } else {
-                        mobdmg = obj.getScore("§7Mobdamage: §aan");
-
-                    }
-                    mobdmg.setScore(2);
-
-                    Score placeholder4 = obj.getScore("");
-                    placeholder4.setScore(1);
-                    if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-                        p.setScoreboard(board);
-                    }
-
-                }
-            }
-        }.runTaskTimer(plugin, 0L,40L);
-    }
 
     @EventHandler
-    public void DoubleJumpEvent (PlayerToggleFlightEvent e) {
+    public void onToggleFlight(PlayerToggleFlightEvent e) {
         Player p = e.getPlayer();
-        if(p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        doubleJumpExecutionAtSpawn(e, p);
+    }
+
+    /**
+     * toggles flight on double-space, cancels the flight event,
+     * disables flying and launches the player by setting the velocity
+     *
+     * @param e the flight event
+     * @param p the player to launch
+     */
+    private void doubleJumpExecutionAtSpawn(PlayerToggleFlightEvent e, Player p) {
+        if(isPlayerAtSpawn(p)) {
             if (p.getGameMode() != GameMode.CREATIVE) {
                 e.setCancelled(true);
                 p.setAllowFlight(false);
@@ -227,9 +258,21 @@ public class LobbyEvents implements Listener {
     }
 
     @EventHandler
-    public void DoubleJumpMoveEvent (PlayerMoveEvent e) {
+    public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        if(p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
+        doubleJumpPreparationAtSpawn(p);
+    }
+
+    /**
+     * allows the player to trigger the flight event in order to launch
+     * supresses deprecation warning because there's not really a fix to the
+     * deprecation of {@link Player#isOnGround()}
+     *
+     * @param p the player to launch
+     */
+    @SuppressWarnings("deprecation")
+    private void doubleJumpPreparationAtSpawn(Player p) {
+        if(isPlayerAtSpawn(p)) {
             if (p.getGameMode() != GameMode.CREATIVE && p.isOnGround()) {
                 p.setAllowFlight(true);
             }
@@ -237,10 +280,14 @@ public class LobbyEvents implements Listener {
     }
 
     @EventHandler
-    public void ArmorStand (PlayerArmorStandManipulateEvent e) {
+    public void onArmorStandManipulationEvent(PlayerArmorStandManipulateEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == plugin.getConfig().getLocation("spawn").getWorld()) {
-            if (LobbyUtilities.builderlist.contains(p.getUniqueId())) {
+        disableArmorStandManipulationOnSpawn(e, p);
+    }
+
+    private void disableArmorStandManipulationOnSpawn(PlayerArmorStandManipulateEvent e, Player p) {
+        if (isPlayerAtSpawn(p)) {
+            if (LobbyUtilities.builderList.contains(p.getUniqueId())) {
                 return;
             }
             p.sendMessage("§8Nö");
@@ -249,14 +296,58 @@ public class LobbyEvents implements Listener {
     }
 
     @EventHandler
-    public void weatherChange(WeatherChangeEvent e) {
+    public void onWeatherChange(WeatherChangeEvent e) {
         World w = e.getWorld();
-        if (w.equals(plugin.getConfig().getLocation("spawn").getWorld())) {
-            e.setCancelled(true);
-            if (w.hasStorm()) {
-                w.setWeatherDuration(0);
-            }
+        if (!isWorldEqualToSpawn(w)) {
+            return;
         }
+
+        cancelWeatherChange(e, w);
+    }
+
+    private void cancelWeatherChange(WeatherChangeEvent e, World w) {
+        e.setCancelled(true);
+        if (w.hasStorm()) {
+            w.setWeatherDuration(0);
+        }
+    }
+
+    /**
+     * check if the player-entity is at spawn
+     * redundant method for the player in order to avoid confusions with the method
+     *
+     * @param p the player entity
+     * @return boolean if the player is at spawn
+     */
+    private boolean isPlayerAtSpawn(Player p) {
+        return isEntityAtSpawn(p);
+    }
+
+    /**
+     * check if the entity is at spawn
+     * redundant method for the entity in order to avoid confusions with the method
+     *
+     * @param e the player entity
+     * @return boolean if the player is at spawn
+     */
+    private boolean isEntityAtSpawn(Entity e) {
+        return isWorldEqualToSpawn(e.getWorld());
+    }
+
+    /**
+     * check if the world is the spawn
+     *
+     * @param w the world to check
+     * @return boolean if it is
+     */
+    private boolean isWorldEqualToSpawn(World w) {
+        Location spawn = plugin.getConfig().getLocation("spawn");
+
+        if (Objects.isNull(spawn)) {
+            return false;
+        }
+
+        return w.equals(spawn.getWorld());
     }
 }
 
