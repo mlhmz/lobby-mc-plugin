@@ -71,12 +71,8 @@ public class InfoScoreboardUtils {
      * @param objective the scoreboard objective
      */
     private static void setNormalScores(Objective objective) {
-        setPlaceholder(objective, 7);
-
-        Score playerCount = objective.getScore(ChatUtils.translate("&7Online: &a" + Bukkit.getOnlinePlayers().size() + "/&7" + Bukkit.getMaxPlayers()));
+        Score playerCount = objective.getScore(ChatUtils.translate("&7Online: &a" + Bukkit.getOnlinePlayers().size() + "&7/" + Bukkit.getMaxPlayers()));
         playerCount.setScore(6);
-
-        setPlaceholder(objective, 5);
     }
 
     /**
@@ -91,26 +87,11 @@ public class InfoScoreboardUtils {
         }
         buildModeScore.setScore(4);
 
-        setPlaceholder(objective, 3);
-
         // sets the mob damage indicator
         Score mobDamage = objective.getScore(ChatUtils.translate("&7Mobdamage: &aan"));
         if (LobbyUtilities.cancelledMobDamage) {
             mobDamage = objective.getScore(ChatUtils.translate("&7Mobdamage: &caus"));
         }
         mobDamage.setScore(2);
-
-        setPlaceholder(objective, 1);
-    }
-
-    /**
-     * sets the placeholder
-     *
-     * @param objective the scoreboard object
-     * @param index the index, where the placeholder should go to
-     */
-    private static void setPlaceholder(Objective objective, int index) {
-        Score placeholder = objective.getScore(" ");
-        placeholder.setScore(index);
     }
 }
