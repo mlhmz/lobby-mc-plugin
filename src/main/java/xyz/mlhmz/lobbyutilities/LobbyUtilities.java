@@ -4,7 +4,7 @@ import xyz.mlhmz.lobbyutilities.commands.BuildCommand;
 import xyz.mlhmz.lobbyutilities.commands.SpawnCommand;
 import xyz.mlhmz.lobbyutilities.commands.SpawnUtilsCommand;
 import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
-import xyz.mlhmz.lobbyutilities.utils.Items;
+import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
 import xyz.mlhmz.lobbyutilities.listeners.LobbyEventListener;
 import xyz.mlhmz.lobbyutilities.listeners.ChatEventListener;
 import xyz.mlhmz.lobbyutilities.listeners.NavigatorListener;
@@ -20,10 +20,9 @@ import java.util.logging.Level;
 
 public final class LobbyUtilities extends JavaPlugin {
 
-    public static String prefix = ChatUtils.translate("&2Lobby &8&l» &7");
+    public static String prefix = ChatUtils.translate("&2Lobby&8: &7");
     public static ArrayList<UUID> builderList = new ArrayList<>();
     public static boolean cancelledMobDamage = true;
-    public static Items items = new Items();
 
     @Override
     public void onEnable() {
@@ -38,45 +37,9 @@ public final class LobbyUtilities extends JavaPlugin {
         }
 
         registerCommandsAndListeners();
-
-        // Navigator Item
-        initializeNavigatorItem();
     }
 
-    private void initializeNavigatorItem() {
-        String materialIdentifier = getConfig().getString("navigatoritem.material");
 
-        ItemStack navigatorItem;
-
-        if (materialIdentifier == null || materialIdentifier.isEmpty()) {
-            getLogger().log(Level.SEVERE, "The navigator is not configured yet... " +
-                    "Falling back to the default Option");
-            return;
-        }
-
-
-
-        Material material = Material.getMaterial(materialIdentifier);
-
-        if (material == null) {
-            getLogger().log(Level.SEVERE, "The configured navigator item is invalid... " +
-                    "Falling back to the default Option");
-            material = Material.FEATHER;
-        }
-
-
-        // creates the item stack out of the material by initializing the variable
-        navigatorItem = new ItemStack(material);
-
-        // configures the meta of the item
-        ItemMeta itemMeta = navigatorItem.getItemMeta();
-        assert itemMeta != null;
-        itemMeta.setDisplayName(ChatUtils.translate(getConfig().getString("navigatoritem.name")));
-        navigatorItem.setItemMeta(itemMeta);
-
-        // sets the navigator item
-        items.setNavigatorItem(navigatorItem);
-    }
 
     private void registerCommandsAndListeners() {
         new ChatEventListener(this);

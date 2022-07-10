@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
 import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 
 import java.util.Objects;
@@ -49,7 +50,7 @@ public class BuildCommand implements CommandExecutor {
             p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("Du hast den &2Buildmodus &causgeschaltet&7!"));
             LobbyUtilities.builderList.remove(p.getUniqueId());
             p.getInventory().clear();
-            p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
+            p.getInventory().setItem(0, NavigatorItem.get(plugin));
 
         } else {
             p.setGameMode(GameMode.CREATIVE);

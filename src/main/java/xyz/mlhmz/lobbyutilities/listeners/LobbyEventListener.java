@@ -1,6 +1,8 @@
 package xyz.mlhmz.lobbyutilities.listeners;
 
+import org.bukkit.event.block.BlockPlaceEvent;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
 import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 import xyz.mlhmz.lobbyutilities.utils.InfoScoreboardUtils;
 import org.bukkit.*;
@@ -31,19 +33,36 @@ public class LobbyEventListener implements Listener {
     }
 
     @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        Player p = e.getPlayer();
+        if (!isPlayerAtSpawn(p)) return;
+
+        if (!isPlayerInBuildMode(p)) {
+            p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Blöcke platzieren!");
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         if (!isPlayerAtSpawn(p)) return;
 
-        if (LobbyUtilities.builderList.contains(p.getUniqueId())) {
-            disableBlockBreak(e, p);
+        if (!isPlayerInBuildMode(p)) {
+            p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Blöcke abbauen!");
+            e.setCancelled(true);
         }
 
     }
 
-    private void disableBlockBreak(BlockBreakEvent e, Player p) {
-        p.sendMessage(LobbyUtilities.prefix + "Du kannst keine Blöcke abbauen!");
-        e.setCancelled(true);
+    @EventHandler
+    public void onInteraction(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if (!isPlayerAtSpawn(p)) return;
+
+        if (!isPlayerInBuildMode(p)) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -84,7 +103,7 @@ public class LobbyEventListener implements Listener {
     private void setItemsOfPlayer(Player p) {
         if (isPlayerAtSpawn(p)) {
             p.getInventory().clear();
-            p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
+            p.getInventory().setItem(0, NavigatorItem.get(plugin));
         }
     }
 
@@ -173,6 +192,7 @@ public class LobbyEventListener implements Listener {
 
     private void disableFoodLevelChangeOnSpawn(FoodLevelChangeEvent e, Player p) {
         if (isPlayerAtSpawn(p)) {
+            p.setFoodLevel(20);
             e.setCancelled(true);
         }
     }
@@ -227,7 +247,7 @@ public class LobbyEventListener implements Listener {
      * @param p the player to check
      */
     private void disableInventoryDragWhenNoBuilderMode(InventoryDragEvent e, Player p) {
-        if (!LobbyUtilities.builderList.contains(p.getUniqueId())) {
+        if (!isPlayerInBuildMode(p)) {
             e.setCancelled(true);
         }
     }
@@ -288,10 +308,9 @@ public class LobbyEventListener implements Listener {
 
     private void disableArmorStandManipulationOnSpawn(PlayerArmorStandManipulateEvent e, Player p) {
         if (isPlayerAtSpawn(p)) {
-            if (LobbyUtilities.builderList.contains(p.getUniqueId())) {
+            if (isPlayerInBuildMode(p)) {
                 return;
             }
-            p.sendMessage(ChatUtils.translate("&8Nö"));
             e.setCancelled(true);
         }
     }
@@ -311,6 +330,16 @@ public class LobbyEventListener implements Listener {
         if (w.hasStorm()) {
             w.setWeatherDuration(0);
         }
+    }
+
+    /**
+     * checks if player is in buildList
+     *
+     * @param p the player to check on
+     * @return boolean if player is in build mode
+     */
+    private boolean isPlayerInBuildMode(Player p) {
+        return LobbyUtilities.builderList.contains(p.getUniqueId());
     }
 
     /**

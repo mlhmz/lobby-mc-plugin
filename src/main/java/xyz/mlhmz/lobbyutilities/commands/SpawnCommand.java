@@ -1,6 +1,7 @@
 package xyz.mlhmz.lobbyutilities.commands;
 
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
 import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -36,7 +37,7 @@ public class SpawnCommand implements CommandExecutor {
 
         p.teleport(spawn);
         p.getInventory().clear();
-        p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
+        p.getInventory().setItem(0, NavigatorItem.get(plugin));
 
         return true;
     }

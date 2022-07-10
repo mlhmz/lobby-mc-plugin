@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import xyz.mlhmz.lobbyutilities.inventories.NavigatorInventory;
+import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
 
 import java.io.IOException;
 
@@ -37,7 +38,7 @@ public class NavigatorListener implements Listener {
 
         if (LobbyUtilities.builderList.contains(p.getUniqueId())) return;
 
-        if (p.getInventory().getItemInMainHand().getType() != Material.FEATHER) return;
+        if (!p.getInventory().getItemInMainHand().equals(NavigatorItem.get(plugin))) return;
 
         NavigatorInventory.get(plugin).show(p);
     }
