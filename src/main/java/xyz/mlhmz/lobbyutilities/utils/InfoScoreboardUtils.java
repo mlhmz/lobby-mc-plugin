@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
+import org.checkerframework.checker.units.qual.C;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 
 /**
@@ -48,7 +49,7 @@ public class InfoScoreboardUtils {
 
         // registration of the scoreboard objective and where it should be shown
         Objective objective = board.registerNewObjective(LOBBY_OBJECTIVE_IDENTIFIER,
-                "dummy", "§2mlhmz Server Netzwerk");
+                "dummy", ChatUtils.translate("&2mlhmz Server Netzwerk"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         setNormalScores(objective);
@@ -72,8 +73,8 @@ public class InfoScoreboardUtils {
     private static void setNormalScores(Objective objective) {
         setPlaceholder(objective, 7);
 
-        Score playercount = objective.getScore("§7Online: §a" + Bukkit.getOnlinePlayers().size() + "/§7" + Bukkit.getMaxPlayers());
-        playercount.setScore(6);
+        Score playerCount = objective.getScore(ChatUtils.translate("&7Online: &a" + Bukkit.getOnlinePlayers().size() + "/&7" + Bukkit.getMaxPlayers()));
+        playerCount.setScore(6);
 
         setPlaceholder(objective, 5);
     }
@@ -84,18 +85,18 @@ public class InfoScoreboardUtils {
      */
     private static void setAdministratorScores(Plugin plugin, Player p, Scoreboard board, Objective objective) {
         // sets the build score indicator
-        Score buildModeScore = objective.getScore("§7Build-Modus: §caus");
+        Score buildModeScore = objective.getScore(ChatUtils.translate("&7Build-Modus: &caus"));
         if (LobbyUtilities.builderList.contains(p.getUniqueId())) {
-            buildModeScore = objective.getScore("§7Build-Modus: §aan");
+            buildModeScore = objective.getScore(ChatUtils.translate("&7Build-Modus: &aan"));
         }
         buildModeScore.setScore(4);
 
         setPlaceholder(objective, 3);
 
         // sets the mob damage indicator
-        Score mobDamage = objective.getScore("§7Mobdamage: §aan");
+        Score mobDamage = objective.getScore(ChatUtils.translate("&7Mobdamage: &aan"));
         if (LobbyUtilities.cancelledMobDamage) {
-            mobDamage = objective.getScore("§7Mobdamage: §caus");
+            mobDamage = objective.getScore(ChatUtils.translate("&7Mobdamage: &caus"));
         }
         mobDamage.setScore(2);
 

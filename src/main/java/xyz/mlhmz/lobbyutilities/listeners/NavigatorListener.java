@@ -63,7 +63,7 @@ public class NavigatorListener implements Listener {
 
         // to minimize the code a for-each loop with an index is used here instead of a for-index loop
         int index = 0;
-        for (char character : chars.toCharArray()) {
+        for (int i = 0; i < savedLocs.size(); i++) {
             String locationConfigurationSection = "locations." + savedLocs.get(index);
 
             ItemStack item =
@@ -73,7 +73,7 @@ public class NavigatorListener implements Listener {
 
             Location l = plugin.getConfig().getLocation(locationConfigurationSection + ".location");
 
-            StaticGuiElement staticGuiElement = new StaticGuiElement(character,
+            StaticGuiElement staticGuiElement = new StaticGuiElement(chars.charAt(i),
                     item,
                     1,
                     click -> {

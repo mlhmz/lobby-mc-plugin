@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 
 import java.util.Objects;
 
@@ -31,11 +32,11 @@ public class BuildCommand implements CommandExecutor {
 
         // Check if user is permitted and in the right world to build
         if (!p.hasPermission("lobby.build")) {
-            p.sendMessage(LobbyUtilities.prefix + "§cDu hast keine Rechte dazu!");
+            p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("&cDu hast keine Rechte dazu!"));
             return true;
         }
         if (lobbyLocation == null) {
-            p.sendMessage(LobbyUtilities.prefix + "§cDie Lobbywelt wurde noch nicht eingerichtet");
+            p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("&cDie Lobbywelt wurde noch nicht eingerichtet"));
             return true;
         }
         if (!(p.getWorld().equals(lobbyLocation.getWorld()))) {
@@ -45,14 +46,14 @@ public class BuildCommand implements CommandExecutor {
 
         if(LobbyUtilities.builderList.contains(p.getUniqueId())) {
             p.setGameMode(GameMode.SURVIVAL);
-            p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §causgeschaltet§7!");
+            p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("Du hast den &2Buildmodus &causgeschaltet&7!"));
             LobbyUtilities.builderList.remove(p.getUniqueId());
             p.getInventory().clear();
             p.getInventory().setItem(0, LobbyUtilities.items.getNavigatorItem());
 
         } else {
             p.setGameMode(GameMode.CREATIVE);
-            p.sendMessage(LobbyUtilities.prefix + "Du hast den §2Buildmodus §aangeschaltet§7!");
+            p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("Du hast den &2Buildmodus &aangeschaltet&7!"));
             LobbyUtilities.builderList.add(p.getUniqueId());
             p.getInventory().clear();
         }

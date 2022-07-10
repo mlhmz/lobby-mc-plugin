@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 
 public class ChatEventListener implements Listener {
     private final LobbyUtilities plugin;
@@ -22,7 +23,7 @@ public class ChatEventListener implements Listener {
     public static void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String Message = e.getMessage();
-        e.setFormat("§e" + p.getName() + " §8§l» §7" + e.getMessage());
+        e.setFormat(ChatUtils.translate("&e" + p.getName() + "&8: &7" + e.getMessage()));
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -31,10 +32,10 @@ public class ChatEventListener implements Listener {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (e.getMessage().contains(p.getName())) {
                 String Message = e.getMessage();
-                e.setMessage(Message.replace(p.getName(), "§e@" + p.getName() + "§7" ));
+                e.setMessage(ChatUtils.translate(Message.replace(p.getName(), "&e@" + p.getName() + "&7" )));
                 p.playSound(p.getEyeLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 5, 1);
                 // One second has 20 ticks so everything is multiplied by 20
-                p.sendTitle("§ePaym §7hat dich erwähnt!", "§8Guck doch mal in den Chat.", 20, 20 * 3, 20);
+                p.sendTitle(ChatUtils.translate("&ePaym &7hat dich erwähnt!"), ChatUtils.translate("&8Guck doch mal in den Chat."), 20, 20 * 3, 20);
             }
         }
     }

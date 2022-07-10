@@ -20,7 +20,7 @@ import java.util.logging.Level;
 
 public final class LobbyUtilities extends JavaPlugin {
 
-    public static String prefix = ChatUtils.translate("§2Lobby §8§l» §7");
+    public static String prefix = ChatUtils.translate("&2Lobby &8&l» &7");
     public static ArrayList<UUID> builderList = new ArrayList<>();
     public static boolean cancelledMobDamage = true;
     public static Items items = new Items();

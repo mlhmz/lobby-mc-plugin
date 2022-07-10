@@ -1,6 +1,7 @@
 package xyz.mlhmz.lobbyutilities.listeners;
 
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
 import xyz.mlhmz.lobbyutilities.utils.InfoScoreboardUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -102,7 +103,7 @@ public class LobbyEventListener implements Listener {
     }
 
     private void initializePlayer(PlayerJoinEvent e, Player p) {
-        e.setJoinMessage("§a§l» §7" + e.getPlayer().getName());
+        e.setJoinMessage(ChatUtils.translate("&a+ &7" + e.getPlayer().getName()));
         p.setHealth(20);
         p.setSaturation(20);
     }
@@ -113,7 +114,7 @@ public class LobbyEventListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        e.setQuitMessage("§c§l« §7" + e.getPlayer().getName());
+        e.setQuitMessage(ChatUtils.translate("&c- &7" + e.getPlayer().getName()));
     }
 
     @EventHandler
@@ -290,7 +291,7 @@ public class LobbyEventListener implements Listener {
             if (LobbyUtilities.builderList.contains(p.getUniqueId())) {
                 return;
             }
-            p.sendMessage("§8Nö");
+            p.sendMessage(ChatUtils.translate("&8Nö"));
             e.setCancelled(true);
         }
     }

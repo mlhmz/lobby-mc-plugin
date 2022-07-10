@@ -41,6 +41,7 @@ public class ServerInventory {
                     click -> {
                         try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             DataOutputStream dos = new DataOutputStream(baos)) {
+                            player.sendMessage("Connecting to server " + server + "...");
                             dos.writeUTF("Connect");
                             dos.writeUTF(server);
                             player.sendPluginMessage(plugin, "BungeeCord", baos.toByteArray());

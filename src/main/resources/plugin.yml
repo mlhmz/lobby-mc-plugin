@@ -1,9 +1,9 @@
 name: LobbyUtilities
 version: ${project.version}
-main: xyz.mlhmz.serverutils.Serverutils
+main: xyz.mlhmz.lobbyutilities.LobbyUtilities
 api-version: 1.19
 authors: [mlhmz]
-description: Serverutils
+description: LobbyUtilities
 
 commands:
   build:

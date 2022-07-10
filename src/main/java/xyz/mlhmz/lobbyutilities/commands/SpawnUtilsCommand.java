@@ -138,8 +138,8 @@ public class SpawnUtilsCommand implements CommandExecutor {
         DecimalFormat df = new DecimalFormat("#.##");
 
         // Sends a message after all
-        p.sendMessage(LobbyUtilities.prefix + "Der Spawn wurde auf die Koordinaten §e" +
-                df.format(l.getX()) + " " + df.format(l.getY()) + " " + df.format(l.getZ()) + " §7gesetzt.");
+        p.sendMessage(ChatUtils.translate(LobbyUtilities.prefix + "Der Spawn wurde auf die Koordinaten &e" +
+                df.format(l.getX()) + " " + df.format(l.getY()) + " " + df.format(l.getZ()) + " &7gesetzt."));
     }
 
     private void reloadConfig(Player p) {
@@ -148,6 +148,6 @@ public class SpawnUtilsCommand implements CommandExecutor {
     }
 
     private void sendCommandUsage(Player p) {
-        p.sendMessage(LobbyUtilities.prefix + "§7Usage: /{cmd} §e<create|delete|setspawn|reloadconfig>".replace("{cmd}", COMMAND_NAME));
+        p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("&7Usage: /{cmd} &e<create|delete|setspawn|reloadconfig>").replace("{cmd}", COMMAND_NAME));
     }
 }
