@@ -26,7 +26,12 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
     shadow 'de.themoep:inventorygui:1.5-SNAPSHOT'
     compileOnly 'org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
 }
