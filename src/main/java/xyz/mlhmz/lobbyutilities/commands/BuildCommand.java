@@ -51,7 +51,6 @@ public class BuildCommand implements CommandExecutor {
             LobbyUtilities.builderList.remove(p.getUniqueId());
             p.getInventory().clear();
             p.getInventory().setItem(0, NavigatorItem.get(plugin));
-
         } else {
             p.setGameMode(GameMode.CREATIVE);
             p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("Du hast den &2Buildmodus &aangeschaltet&7!"));

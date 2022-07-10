@@ -115,10 +115,6 @@ public class LobbyEventListener implements Listener {
         }
 
         p.teleport(l);
-
-        if (isEntityAtSpawn(p)) {
-            playBackgroundMusic(p);
-        }
     }
 
     private void initializePlayer(PlayerJoinEvent e, Player p) {
@@ -204,22 +200,17 @@ public class LobbyEventListener implements Listener {
         // Removes the
         LobbyUtilities.builderList.remove(p.getUniqueId());
 
-        onWorldSwap(p);
         if (isPlayerAtSpawn(p)) {
-            playBackgroundMusic(p);
+            onWorldSwap(p);
+            setItemsOfPlayer(p);
         }
-        setItemsOfPlayer(p);
 
         p.setAllowFlight(false);
 
     }
 
-    private void playBackgroundMusic(Player p) {
-        p.playSound(p.getLocation(), MUSIC_DISC_STAL, 1, 1);
-    }
 
     private void onWorldSwap(Player p) {
-        p.stopAllSounds();
         p.getInventory().clear();
     }
 
