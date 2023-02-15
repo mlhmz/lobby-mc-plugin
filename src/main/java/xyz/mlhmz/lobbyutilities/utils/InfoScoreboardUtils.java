@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
-import org.checkerframework.checker.units.qual.C;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 
 /**
@@ -15,32 +14,40 @@ import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 public class InfoScoreboardUtils {
     public static final String LOBBY_OBJECTIVE_IDENTIFIER = "lobby";
 
+    private InfoScoreboardUtils() {}
+
     public static void showScoreboardAndSchedule(Plugin plugin, Player p) {
         // avoids to run new thread if player already has the scoreboard
         if (p.getScoreboard().getObjective(LOBBY_OBJECTIVE_IDENTIFIER) != null) {
             return;
         }
 
-        new BukkitRunnable() {
+
+        getScoreboardRunnable(plugin, p).runTaskTimer(plugin, 0L, 40L);
+    }
+
+    private static BukkitRunnable getScoreboardRunnable(Plugin plugin, Player p) {
+        return new BukkitRunnable() {
             @Override
             public void run() {
-                // cancels thread if player is offline
-                if (!p.isOnline()) {
+                if (isPlayerNotOnline()) {
                     this.cancel();
                 }
 
-
-                // shows the scoreboard
-                show(plugin, p);
+                updateScoreboard(plugin, p);
             }
-        }.runTaskTimer(plugin, 0L, 40L);
+
+            private boolean isPlayerNotOnline() {
+                return !p.isOnline();
+            }
+        };
     }
 
     /**
      * Shows the scoreboard to a player
      * @param p the player to show the scoreboard to
      */
-    public static void show(Plugin plugin, Player p) {
+    public static void updateScoreboard(Plugin plugin, Player p) {
         // creates a new scoreboard
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         // fallback option, usually shouldn't be null
