@@ -119,6 +119,7 @@ public class LobbyEventListener implements Listener {
         e.setJoinMessage(ChatUtils.translate("&a+ &7" + e.getPlayer().getName()));
         p.setHealth(20);
         p.setSaturation(20);
+        p.setFoodLevel(20);
     }
 
     private void createScoreboard(Player p) {
