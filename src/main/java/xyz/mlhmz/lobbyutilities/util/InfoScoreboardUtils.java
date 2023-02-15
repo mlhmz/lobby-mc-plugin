@@ -56,7 +56,7 @@ public class InfoScoreboardUtils {
 
         // registration of the scoreboard objective and where it should be shown
         Objective objective = board.registerNewObjective(LOBBY_OBJECTIVE_IDENTIFIER,
-                "dummy", ChatUtils.translate("&2mlhmz Server Netzwerk"));
+                Criteria.DUMMY, ChatUtils.translate("&2mlhmz Server Netzwerk"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         setNormalScores(objective);
