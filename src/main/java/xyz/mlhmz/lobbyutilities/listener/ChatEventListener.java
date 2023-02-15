@@ -1,4 +1,4 @@
-package xyz.mlhmz.lobbyutilities.listeners;
+package xyz.mlhmz.lobbyutilities.listener;
 
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import org.bukkit.Bukkit;
@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 public class ChatEventListener implements Listener {
     private final LobbyUtilities plugin;

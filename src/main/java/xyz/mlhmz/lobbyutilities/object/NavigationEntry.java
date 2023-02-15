@@ -1,4 +1,4 @@
-package xyz.mlhmz.lobbyutilities.objects;
+package xyz.mlhmz.lobbyutilities.object;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

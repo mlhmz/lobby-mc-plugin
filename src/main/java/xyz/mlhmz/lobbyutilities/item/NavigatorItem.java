@@ -1,10 +1,10 @@
-package xyz.mlhmz.lobbyutilities.items;
+package xyz.mlhmz.lobbyutilities.item;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

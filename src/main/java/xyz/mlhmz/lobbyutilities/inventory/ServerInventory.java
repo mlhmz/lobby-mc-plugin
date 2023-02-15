@@ -1,9 +1,9 @@
-package xyz.mlhmz.lobbyutilities.inventories;
+package xyz.mlhmz.lobbyutilities.inventory;
 
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

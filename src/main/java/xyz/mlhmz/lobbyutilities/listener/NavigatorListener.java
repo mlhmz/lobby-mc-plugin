@@ -1,4 +1,4 @@
-package xyz.mlhmz.lobbyutilities.listeners;
+package xyz.mlhmz.lobbyutilities.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.inventories.NavigatorInventory;
+import xyz.mlhmz.lobbyutilities.inventory.NavigatorInventory;
 
 import java.io.IOException;
 

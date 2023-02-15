@@ -1,22 +1,17 @@
 package xyz.mlhmz.lobbyutilities;
 
-import xyz.mlhmz.lobbyutilities.commands.BuildCommand;
-import xyz.mlhmz.lobbyutilities.commands.SpawnCommand;
-import xyz.mlhmz.lobbyutilities.commands.SpawnUtilsCommand;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
-import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
-import xyz.mlhmz.lobbyutilities.listeners.LobbyEventListener;
-import xyz.mlhmz.lobbyutilities.listeners.ChatEventListener;
-import xyz.mlhmz.lobbyutilities.listeners.NavigatorListener;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import xyz.mlhmz.lobbyutilities.command.BuildCommand;
+import xyz.mlhmz.lobbyutilities.command.SpawnCommand;
+import xyz.mlhmz.lobbyutilities.command.SpawnUtilsCommand;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
+import xyz.mlhmz.lobbyutilities.listener.LobbyEventListener;
+import xyz.mlhmz.lobbyutilities.listener.ChatEventListener;
+import xyz.mlhmz.lobbyutilities.listener.NavigatorListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public final class LobbyUtilities extends JavaPlugin {
 

@@ -1,10 +1,10 @@
-package xyz.mlhmz.lobbyutilities.listeners;
+package xyz.mlhmz.lobbyutilities.listener;
 
 import org.bukkit.event.block.BlockPlaceEvent;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
-import xyz.mlhmz.lobbyutilities.utils.InfoScoreboardUtils;
+import xyz.mlhmz.lobbyutilities.item.NavigatorItem;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.InfoScoreboardUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,8 +17,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import java.util.Objects;
-
-import static org.bukkit.Sound.*;
 
 /**
  * Events related to the lobby logic

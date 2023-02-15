@@ -1,7 +1,7 @@
-package xyz.mlhmz.lobbyutilities.utils;
+package xyz.mlhmz.lobbyutilities.util;
 
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.objects.NavigationEntry;
+import xyz.mlhmz.lobbyutilities.object.NavigationEntry;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

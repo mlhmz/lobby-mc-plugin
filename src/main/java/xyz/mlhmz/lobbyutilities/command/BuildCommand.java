@@ -1,4 +1,4 @@
-package xyz.mlhmz.lobbyutilities.commands;
+package xyz.mlhmz.lobbyutilities.command;
 
 import org.bukkit.Location;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
@@ -7,8 +7,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.item.NavigatorItem;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 import java.util.Objects;
 

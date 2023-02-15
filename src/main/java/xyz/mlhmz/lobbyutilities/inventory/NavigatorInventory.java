@@ -1,4 +1,4 @@
-package xyz.mlhmz.lobbyutilities.inventories;
+package xyz.mlhmz.lobbyutilities.inventory;
 
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.utils.BukkitSerialization;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.BukkitSerialization;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 import java.io.IOException;
 import java.util.List;

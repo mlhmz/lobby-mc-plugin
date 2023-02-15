@@ -1,9 +1,9 @@
-package xyz.mlhmz.lobbyutilities.commands;
+package xyz.mlhmz.lobbyutilities.command;
 
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.utils.ChatUtils;
-import xyz.mlhmz.lobbyutilities.utils.Navigator;
-import xyz.mlhmz.lobbyutilities.objects.NavigationEntry;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.Navigator;
+import xyz.mlhmz.lobbyutilities.object.NavigationEntry;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
