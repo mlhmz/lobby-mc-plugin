@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import xyz.mlhmz.lobbyutilities.inventories.NavigatorInventory;
-import xyz.mlhmz.lobbyutilities.items.NavigatorItem;
 
 import java.io.IOException;
 
@@ -32,16 +31,28 @@ public class NavigatorListener implements Listener {
         Player p = e.getPlayer();
         Location spawn = plugin.getConfig().getLocation("spawn");
 
-        if (spawn == null) return;
-
-        if (!(p.getWorld() == spawn.getWorld())) return;
-
-        if (LobbyUtilities.builderList.contains(p.getUniqueId())) return;
-
-        if (!p.getInventory().getItemInMainHand().equals(NavigatorItem.get(plugin))) return;
-
-        NavigatorInventory.get(plugin).show(p);
+        if (isPlayerInSpawnWorldAndNotInBuilderList(p, spawn) && isPlayerHoldingFeather(p)) {
+            NavigatorInventory.get(plugin).show(p);
+        }
     }
 
+    private boolean isPlayerInSpawnWorldAndNotInBuilderList(Player p, Location spawn) {
+        return isPlayerInSpawnWorld(p, spawn) && isBuilderListNotContainingPlayer(p);
+    }
 
+    private static boolean isPlayerInSpawnWorld(Player p, Location spawn) {
+        return isSpawnNotNull(spawn) && p.getWorld() != spawn.getWorld();
+    }
+
+    private static boolean isSpawnNotNull(Location spawn) {
+        return spawn != null;
+    }
+
+    private boolean isBuilderListNotContainingPlayer(Player p) {
+        return !LobbyUtilities.builderList.contains(p.getUniqueId());
+    }
+
+    private boolean isPlayerHoldingFeather(Player p) {
+        return p.getInventory().getItemInMainHand().getType().equals(Material.FEATHER);
+    }
 }
