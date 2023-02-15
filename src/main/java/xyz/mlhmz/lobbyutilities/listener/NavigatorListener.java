@@ -41,7 +41,7 @@ public class NavigatorListener implements Listener {
     }
 
     private static boolean isPlayerInSpawnWorld(Player p, Location spawn) {
-        return isSpawnNotNull(spawn) && p.getWorld() != spawn.getWorld();
+        return isSpawnNotNull(spawn) && p.getWorld() == spawn.getWorld();
     }
 
     private static boolean isSpawnNotNull(Location spawn) {
