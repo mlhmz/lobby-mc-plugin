@@ -23,7 +23,7 @@ public abstract class PluginModule {
             plugin.getLogger().log(Level.INFO, String.format("The module \"%s\" has been enabled.", getIdentifier()));
         } else {
             plugin.getLogger().log(Level.INFO, String.format("The module \"%s\" has not been enabled, because " +
-                    "it has been disabled in the Config."));
+                    "it has been disabled in the Config.", getIdentifier()));
         }
 
     }
