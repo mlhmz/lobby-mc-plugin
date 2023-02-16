@@ -1,0 +1,16 @@
+package xyz.mlhmz.lobbyutilities.util;
+
+import org.bukkit.event.Listener;
+import xyz.mlhmz.lobbyutilities.command.ExtendedCommand;
+
+import java.util.List;
+
+public class ModuleUtils {
+    public static List<ExtendedCommand> createCommandList(ExtendedCommand... commands) {
+        return List.of(commands);
+    }
+
+    public static List<Listener> createListenerList(Listener... listeners) {
+        return List.of(listeners);
+    }
+}
