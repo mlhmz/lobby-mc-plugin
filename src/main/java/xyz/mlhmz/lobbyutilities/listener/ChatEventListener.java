@@ -1,13 +1,12 @@
 package xyz.mlhmz.lobbyutilities.listener;
 
-import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 public class ChatEventListener implements Listener {
@@ -15,7 +14,6 @@ public class ChatEventListener implements Listener {
 
     public ChatEventListener(LobbyUtilities plugin) {
         this.plugin = plugin;
-        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

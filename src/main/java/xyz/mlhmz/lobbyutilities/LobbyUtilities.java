@@ -2,8 +2,8 @@ package xyz.mlhmz.lobbyutilities;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.mlhmz.lobbyutilities.command.BuildCommand;
-import xyz.mlhmz.lobbyutilities.listener.ChatEventListener;
 import xyz.mlhmz.lobbyutilities.listener.NavigatorListener;
+import xyz.mlhmz.lobbyutilities.module.ChatModule;
 import xyz.mlhmz.lobbyutilities.module.LobbyModule;
 import xyz.mlhmz.lobbyutilities.module.ScoreboardModule;
 import xyz.mlhmz.lobbyutilities.util.ChatUtils;
@@ -51,10 +51,10 @@ public final class LobbyUtilities extends JavaPlugin {
     private void updateModules() {
         new LobbyModule(this).initialize();
         new ScoreboardModule(this).initialize();
+        new ChatModule(this).initialize();
     }
 
     private void registerCommandsAndListeners() {
-        new ChatEventListener(this);
         new BuildCommand(this);
         new NavigatorListener(this);
     }

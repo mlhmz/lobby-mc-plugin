@@ -22,4 +22,5 @@ servers:
 modules:
   lobby: true
   scoreboard: true
+  chat: true
 
