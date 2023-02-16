@@ -1,24 +1,19 @@
 package xyz.mlhmz.lobbyutilities.command;
 
-import org.bukkit.Location;
-import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import xyz.mlhmz.lobbyutilities.item.NavigatorItem;
 import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
-import java.util.Objects;
-
-public class BuildCommand implements CommandExecutor {
+public class BuildCommand extends ExtendedCommand {
     private final LobbyUtilities plugin;
 
     public BuildCommand(LobbyUtilities plugin) {
         this.plugin = plugin;
-
-        Objects.requireNonNull(plugin.getCommand("build")).setExecutor(this);
     }
 
     @SuppressWarnings("NullableProblems")
@@ -58,5 +53,10 @@ public class BuildCommand implements CommandExecutor {
             p.getInventory().clear();
         }
         return true;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return "build";
     }
 }

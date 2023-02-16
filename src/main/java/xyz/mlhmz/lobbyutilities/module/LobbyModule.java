@@ -2,6 +2,7 @@ package xyz.mlhmz.lobbyutilities.module;
 
 import org.bukkit.event.Listener;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.command.BuildCommand;
 import xyz.mlhmz.lobbyutilities.command.ExtendedCommand;
 import xyz.mlhmz.lobbyutilities.command.SpawnCommand;
 import xyz.mlhmz.lobbyutilities.command.SpawnUtilsCommand;
@@ -26,7 +27,8 @@ public class LobbyModule extends PluginModule {
     protected List<ExtendedCommand> getCommands() {
         return ModuleUtils.createCommandList(
                 new SpawnUtilsCommand(plugin),
-                new SpawnCommand(plugin)
+                new SpawnCommand(plugin),
+                new BuildCommand(plugin)
         );
     }
 
