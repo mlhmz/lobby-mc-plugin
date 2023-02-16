@@ -1,7 +1,7 @@
 prefix: '&6Lobby &8\u00BB&7'
 
 navigatoritem:
-  name: '&6Navigator &7[&6Rechtsklick&7]'
+  name: '&6Navigator &7[&6Right Click&7]'
   # Minecraft Material Names (Will be upcased by plugin!)
   material: 'FEATHER'
 
