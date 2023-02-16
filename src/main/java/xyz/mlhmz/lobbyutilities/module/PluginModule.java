@@ -10,7 +10,7 @@ import java.util.logging.Level;
 
 public abstract class PluginModule {
     public static final String MODULES_KEY = "modules";
-    private final LobbyUtilities plugin;
+    protected final LobbyUtilities plugin;
 
     public PluginModule(LobbyUtilities plugin) {
         this.plugin = plugin;
