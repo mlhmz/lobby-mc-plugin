@@ -17,7 +17,7 @@ public abstract class PluginModule {
     }
 
     public void initialize() {
-        if (isModuleEnabled()) {
+        if (!isToggleable() || isModuleEnabled()) {
             registerCommands();
             registerListeners();
             plugin.getLogger().log(Level.INFO, String.format("The module \"%s\" has been enabled.", getIdentifier()));
@@ -61,5 +61,6 @@ public abstract class PluginModule {
 
     protected abstract List<Listener> getListeners();
     protected abstract List<ExtendedCommand> getCommands();
+    public abstract boolean isToggleable();
     public abstract String getIdentifier();
 }
