@@ -1,6 +1,5 @@
 package xyz.mlhmz.lobbyutilities.listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,8 +21,6 @@ public class NavigatorListener implements Listener {
 
     public NavigatorListener(LobbyUtilities plugin) {
         this.plugin = plugin;
-
-        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler

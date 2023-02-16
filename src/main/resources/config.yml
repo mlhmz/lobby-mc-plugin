@@ -23,4 +23,5 @@ modules:
   lobby: true
   scoreboard: true
   chat: true
+  navigator: true
 

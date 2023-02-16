@@ -5,6 +5,7 @@ import xyz.mlhmz.lobbyutilities.command.BuildCommand;
 import xyz.mlhmz.lobbyutilities.listener.NavigatorListener;
 import xyz.mlhmz.lobbyutilities.module.ChatModule;
 import xyz.mlhmz.lobbyutilities.module.LobbyModule;
+import xyz.mlhmz.lobbyutilities.module.NavigatorModule;
 import xyz.mlhmz.lobbyutilities.module.ScoreboardModule;
 import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
@@ -52,6 +53,7 @@ public final class LobbyUtilities extends JavaPlugin {
         new LobbyModule(this).initialize();
         new ScoreboardModule(this).initialize();
         new ChatModule(this).initialize();
+        new NavigatorModule(this).initialize();
     }
 
     private void registerCommandsAndListeners() {
