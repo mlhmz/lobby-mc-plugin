@@ -1,21 +1,21 @@
 package xyz.mlhmz.lobbyutilities.command;
 
-import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.util.ChatUtils;
-import xyz.mlhmz.lobbyutilities.util.Navigator;
-import xyz.mlhmz.lobbyutilities.object.NavigationEntry;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.object.NavigationEntry;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.Navigator;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class SpawnUtilsCommand implements CommandExecutor {
+public class SpawnUtilsCommand extends ExtendedCommand {
     private final LobbyUtilities plugin;
     private final String COMMAND_NAME = "spawnutils";
 
@@ -149,5 +149,10 @@ public class SpawnUtilsCommand implements CommandExecutor {
 
     private void sendCommandUsage(Player p) {
         p.sendMessage(LobbyUtilities.prefix + ChatUtils.translate("&7Usage: /{cmd} &e<create|delete|setspawn|reloadconfig>").replace("{cmd}", COMMAND_NAME));
+    }
+
+    @Override
+    public String getIdentifier() {
+        return COMMAND_NAME;
     }
 }

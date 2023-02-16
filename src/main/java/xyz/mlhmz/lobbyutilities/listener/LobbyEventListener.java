@@ -26,8 +26,6 @@ public class LobbyEventListener implements Listener {
 
     public LobbyEventListener(LobbyUtilities plugin) {
         this.plugin = plugin;
-
-        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler

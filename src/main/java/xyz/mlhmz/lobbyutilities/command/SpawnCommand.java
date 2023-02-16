@@ -1,17 +1,16 @@
 package xyz.mlhmz.lobbyutilities.command;
 
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import xyz.mlhmz.lobbyutilities.LobbyUtilities;
 import xyz.mlhmz.lobbyutilities.item.NavigatorItem;
 import xyz.mlhmz.lobbyutilities.util.ChatUtils;
-import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-public class SpawnCommand implements CommandExecutor {
+public class SpawnCommand extends ExtendedCommand {
     private final LobbyUtilities plugin;
 
     public SpawnCommand(LobbyUtilities plugin) {
@@ -40,5 +39,10 @@ public class SpawnCommand implements CommandExecutor {
         p.getInventory().setItem(0, NavigatorItem.get(plugin));
 
         return true;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return "spawn";
     }
 }

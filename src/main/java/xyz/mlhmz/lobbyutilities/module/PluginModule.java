@@ -37,7 +37,9 @@ public abstract class PluginModule {
     }
 
     private void registerCommands() {
-        getCommands().forEach(this::registerCommand);
+        if (getCommands() != null) {
+            getCommands().forEach(this::registerCommand);
+        }
     }
 
     private void registerCommand(ExtendedCommand extendedCommand) {
@@ -52,7 +54,9 @@ public abstract class PluginModule {
     }
 
     private void registerListeners() {
-        getListeners().forEach(this::registerListener);
+        if (getListeners() != null) {
+            getListeners().forEach(this::registerListener);
+        }
     }
 
     private void registerListener(Listener listener) {

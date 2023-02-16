@@ -20,4 +20,5 @@ servers:
   - config
 
 modules:
+  lobby: true
 

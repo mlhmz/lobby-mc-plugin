@@ -1,13 +1,11 @@
 package xyz.mlhmz.lobbyutilities;
 
+import org.bukkit.plugin.java.JavaPlugin;
 import xyz.mlhmz.lobbyutilities.command.BuildCommand;
-import xyz.mlhmz.lobbyutilities.command.SpawnCommand;
-import xyz.mlhmz.lobbyutilities.command.SpawnUtilsCommand;
-import xyz.mlhmz.lobbyutilities.util.ChatUtils;
-import xyz.mlhmz.lobbyutilities.listener.LobbyEventListener;
 import xyz.mlhmz.lobbyutilities.listener.ChatEventListener;
 import xyz.mlhmz.lobbyutilities.listener.NavigatorListener;
-import org.bukkit.plugin.java.JavaPlugin;
+import xyz.mlhmz.lobbyutilities.module.LobbyModule;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -31,19 +29,10 @@ public final class LobbyUtilities extends JavaPlugin {
             prefix = ChatUtils.translate(configPrefix) + " ";
         }
 
+        updateModules();
         registerCommandsAndListeners();
     }
 
-
-
-    private void registerCommandsAndListeners() {
-        new ChatEventListener(this);
-        new BuildCommand(this);
-        new LobbyEventListener(this);
-        new SpawnUtilsCommand(this);
-        new SpawnCommand(this);
-        new NavigatorListener(this);
-    }
 
     @Override
     public void onDisable() {
@@ -53,7 +42,18 @@ public final class LobbyUtilities extends JavaPlugin {
     @Override
     public void reloadConfig() {
         super.reloadConfig();
+        updateModules();
         LobbyUtilities.prefix =
                 ChatUtils.translate(Objects.requireNonNull(getConfig().getString("prefix"))) + " ";
+    }
+
+    private void updateModules() {
+        new LobbyModule(this).initialize();
+    }
+
+    private void registerCommandsAndListeners() {
+        new ChatEventListener(this);
+        new BuildCommand(this);
+        new NavigatorListener(this);
     }
 }
