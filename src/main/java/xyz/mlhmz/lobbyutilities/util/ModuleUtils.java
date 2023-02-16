@@ -7,10 +7,14 @@ import java.util.List;
 
 public class ModuleUtils {
     public static List<ExtendedCommand> createCommandList(ExtendedCommand... commands) {
-        return List.of(commands);
+        return createObjectList(commands);
     }
 
     public static List<Listener> createListenerList(Listener... listeners) {
-        return List.of(listeners);
+        return createObjectList(listeners);
+    }
+
+    private static <T> List<T> createObjectList(T[] args) {
+        return List.of(args);
     }
 }
