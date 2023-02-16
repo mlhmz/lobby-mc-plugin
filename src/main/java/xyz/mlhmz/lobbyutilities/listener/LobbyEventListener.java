@@ -1,20 +1,22 @@
 package xyz.mlhmz.lobbyutilities.listener;
 
-import org.bukkit.event.block.BlockPlaceEvent;
-import xyz.mlhmz.lobbyutilities.LobbyUtilities;
-import xyz.mlhmz.lobbyutilities.item.NavigatorItem;
-import xyz.mlhmz.lobbyutilities.util.ChatUtils;
-import xyz.mlhmz.lobbyutilities.util.InfoScoreboardUtils;
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import xyz.mlhmz.lobbyutilities.LobbyUtilities;
+import xyz.mlhmz.lobbyutilities.item.NavigatorItem;
+import xyz.mlhmz.lobbyutilities.util.ChatUtils;
 
 import java.util.Objects;
 
@@ -93,7 +95,6 @@ public class LobbyEventListener implements Listener {
         initializePlayer(e, p);
         teleportPlayerToSpawn(p);
         setItemsOfPlayer(p);
-        createScoreboard(p);
     }
 
     private void setItemsOfPlayer(Player p) {
@@ -118,10 +119,6 @@ public class LobbyEventListener implements Listener {
         p.setHealth(20);
         p.setSaturation(20);
         p.setFoodLevel(20);
-    }
-
-    private void createScoreboard(Player p) {
-        InfoScoreboardUtils.showScoreboardAndSchedule(plugin, p);
     }
 
     @EventHandler
