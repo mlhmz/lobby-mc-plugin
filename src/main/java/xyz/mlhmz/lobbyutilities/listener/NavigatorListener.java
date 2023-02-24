@@ -37,11 +37,11 @@ public class NavigatorListener implements Listener {
         return isPlayerInSpawnWorld(p, spawn) && isBuilderListNotContainingPlayer(p);
     }
 
-    private static boolean isPlayerInSpawnWorld(Player p, Location spawn) {
+    private boolean isPlayerInSpawnWorld(Player p, Location spawn) {
         return isSpawnNotNull(spawn) && p.getWorld() == spawn.getWorld();
     }
 
-    private static boolean isSpawnNotNull(Location spawn) {
+    private boolean isSpawnNotNull(Location spawn) {
         return spawn != null;
     }
 
