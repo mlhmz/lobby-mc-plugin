@@ -1,11 +1,9 @@
 package xyz.mlhmz.lobbyutilities;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.mlhmz.lobbyutilities.module.ChatModule;
-import xyz.mlhmz.lobbyutilities.module.LobbyModule;
-import xyz.mlhmz.lobbyutilities.module.NavigatorModule;
-import xyz.mlhmz.lobbyutilities.module.ScoreboardModule;
+import xyz.mlhmz.lobbyutilities.module.*;
 import xyz.mlhmz.lobbyutilities.util.ChatUtils;
+import xyz.mlhmz.lobbyutilities.util.ModuleUtils;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -47,10 +45,12 @@ public final class LobbyUtilities extends JavaPlugin {
     }
 
     private void updateModules() {
-        new LobbyModule(this).initialize();
-        new ScoreboardModule(this).initialize();
-        new ChatModule(this).initialize();
-        new NavigatorModule(this).initialize();
-        new LobbyModule(this).initialize();
+        ModuleUtils.createModuleList(
+                new LobbyModule(this),
+                new ScoreboardModule(this),
+                new ChatModule(this),
+                new NavigatorModule(this),
+                new LobbyModule(this)
+        ).forEach(PluginModule::initialize);
     }
 }
